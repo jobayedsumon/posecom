@@ -1,0 +1,26 @@
+<script>
+        $('.sizeId').on('click', function () {
+           let sizeId = $(this).val();
+           let productId = $('#productId').val();
+
+            let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+            $.ajax({
+                type: 'GET',
+                url: '/product-price',
+                data: {
+                    _token: CSRF_TOKEN,
+                    size_id: sizeId,
+                    product_id: productId
+                },
+                success: function (result) {
+                    console.log(result);
+                    $('#oldPrice').text('BDT '+result.data.price);
+                    let discount = result.product.sale;
+                    console.log(discount);
+                    $('#currentPrice').text('BDT '+result.data.price);
+                }
+            });
+
+        });
+    </script>
