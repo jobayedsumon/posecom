@@ -43,7 +43,7 @@
                                             <figure class="h-full flex flex-column justify-start">
                                                 <div class="product_thumb">
                                                     <a class="primary_img" href="{{ route('product-details', [$featuredProduct->category->id, $featuredProduct->id]) }}">
-                                                        <img src="{{ $parentUrl.'/public/images/product/'.$featuredProduct->image}}" alt=""></a>
+                                                        <img src="{{ productImage($featuredProduct->image) }}" alt=""></a>
 
 {{--                                                    <div class="label_product">--}}
 {{--                                                        <span class="label_sale">-{{ $featuredProduct->discount }}%</span>--}}

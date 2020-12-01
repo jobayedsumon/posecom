@@ -180,6 +180,7 @@ body.offcanvas-active {
     opacity: 1;
     visibility: visible;
     top: 100%;
+    background: #ffd700;
     -webkit-transform: rotateX(0deg);
             transform: rotateX(0deg); }
 

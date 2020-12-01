@@ -8,7 +8,8 @@ html, body {
 }
 
 body, .header_middle, .sticky-header .sticky{
-    background: rgba(253, 230, 236, 0.1) !important;
+    background: rgba(255,215,0, 0.025);
+
 }
 
 .page_content h1 {
@@ -21,10 +22,16 @@ body, .header_middle, .sticky-header .sticky{
     line-height: 2rem;
 }
 
+.text-golden {
+    color: #ffd700;
+}
 
+.bg-golden {
+    background-color: #ffd700;
+}
 
 .mega_menu, .dropdown_search {
-    background-color: rgb(253, 230, 236) !important;
+    background-color: #ffd700 !important;
 }
 
     /* Equal Heights for OwlCarousel 2 */
@@ -62,22 +69,22 @@ body, .header_middle, .sticky-header .sticky{
 
 
 .customButton {
-    background: #F9BBCA !important;
+    background: #ffd700 !important;
     color: #000 !important;
     text-align: center;
 }
 
 .customButton:hover {
-    background: #F4587A !important;
+    background: #ffd700 !important;
     color: #fff !important;
 }
 
 .slider_area .owl-dots .owl-dot.active {
-    background: #F4587A;
+    background: #ffd700;
 }
 
 .slider_area .owl-dots .owl-dot:hover {
-    background: #F4587A;
+    background: #ffd700;
 }
 
 .banner_thumb {
@@ -102,11 +109,11 @@ body, .header_middle, .sticky-header .sticky{
 }
 
 .cart_button a {
-    background: #F4587A;
+    background: #ffd700;
 }
 
 .cart_button a:hover {
-    background: #EC1C50;
+    background: #ffd700;
 }
 
 .modal_social {
@@ -115,8 +122,8 @@ body, .header_middle, .sticky-header .sticky{
 
 
 footer, .header_top {
-    background: rgb(249, 187, 202);
-    /*background: linear-gradient(100deg, rgba(255,255,255, 1) 0%, rgba(249, 187, 202, 1) 100%);*/
+    background: rgb(255,215,0);
+    background: linear-gradient(270deg, rgba(255,215,0,1) 0%, rgba(255,255,255,1) 100%);
 }
 
 .main_menu nav > ul > li ul.sub_menu {
@@ -142,7 +149,7 @@ footer, .header_top {
 }
 
 .social_icons li {
-    background: #F4587A;
+    background: #ffd700;
     height: 30px;
     width: 30px;
     border-radius: 50%;
@@ -165,18 +172,18 @@ footer, .header_top {
 }
 
 .table-responsive table thead {
-    background: rgb(249, 187, 202);
+    background: #ffd700;
 }
 
 .pagination ul li {
-    background-color: #F9BBCA;
+    background-color: #ffd700;
 }
 
 .pagination ul li a:hover {
-    background-color: #F4587A;
+    background-color: #ffd700;
 }
 .pagination ul li.current {
-    background-color: #F4587A;
+    background-color: #ffd700;
 }
 
 .rating i {
@@ -193,8 +200,8 @@ footer, .header_top {
 .page-item.active .page-link {
 
 	color: #000;
-    background-color: #F9BBCA;
-    border-color: #F9BBCA;
+    background-color: #ffd700;
+    border-color: #ffd700;
 }
 
 

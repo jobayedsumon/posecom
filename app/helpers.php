@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Facades\Config;
 
+
+
+
+
 function cdn($asset ){
 
 
@@ -56,6 +60,27 @@ function cdnPath($cdn, $asset) {
 
     return  "//" . rtrim($cdn, "/") . "/" . ltrim( $asset, "/");
 
+}
+
+function categoryImage($image)
+{
+    $parentUrl = env('PARENT_URL');
+
+    return $parentUrl . '/public/images/category/' . $image;
+}
+
+function productImage($image)
+{
+    $parentUrl = env('PARENT_URL');
+
+    return $parentUrl . '/public/images/product/' . $image;
+}
+
+function logo($image)
+{
+    $parentUrl = env('PARENT_URL');
+
+    return $parentUrl . '/public/logo/' . $image;
 }
 
 ?>

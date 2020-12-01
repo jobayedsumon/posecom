@@ -41,14 +41,14 @@
                 <div class="collapse navbar-collapse" id="main_nav99">
                     <ul class="navbar-nav flex flex-row items-center justify-evenly w-full">
                         <li class="nav-item">
-                            <a href="{{ route('home') }}"><img width="150px" src="{{ asset('frontend/img/logo/logo-amarshop.com.bd.png')}}" alt=""></a>
+                            <a href="{{ route('home') }}"><img width="300px" src="{{ logo($general_setting->site_logo) }}" alt=""></a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"> Shop </a>
                             <ul class="dropdown-menu">
                                 @forelse($categories as $category)
                                     <li class="has-megasubmenu">
-                                        <a class="dropdown-item icon-arrow" href="{{ route('shop', $category->id) }}"> {{ $category->name }} </a>
+                                        <a class="dropdown-item" href="{{ route('shop', $category->slug) }}"> {{ $category->name }} </a>
 {{--                                        <div class="megasubmenu dropdown-menu">--}}
 {{--                                            <div class="row items-center">--}}
 {{--                                                        @forelse($sub_categories = $category->sub_categories as $sub_category)--}}

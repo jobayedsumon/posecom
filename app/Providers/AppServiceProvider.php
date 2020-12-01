@@ -26,8 +26,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-        $parentUrl = 'http://salepropos.test';
-        \Illuminate\Support\Facades\View::share('parentUrl', $parentUrl);
+
     }
 }

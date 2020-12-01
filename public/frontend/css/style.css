@@ -265,7 +265,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
     Scroll Up
 -----------------------------------------*/
 #scrollUp {
-  background: #F4587A none repeat scroll 0 0;
+  background: #ffd700 none repeat scroll 0 0;
   bottom: 85px;
   color: #ffffff;
   cursor: pointer;
@@ -902,7 +902,6 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 }
 
 .header_middle {
-  padding: 24px 0;
   position: relative;
 }
 @media only screen and (min-width: 768px) and (max-width: 991px) {
@@ -1012,7 +1011,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   width: 20px;
   height: 20px;
   line-height: 20px;
-  background: #F4587A;
+  background: #ffd700;
   color: #fff;
   border-radius: 100%;
   text-align: center;
@@ -2674,7 +2673,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 }
 .action_links ul li a:hover {
   color: #fff;
-  background: #F4587A;
+  background: #ffd700;
 }
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .action_links ul li a {
@@ -2701,7 +2700,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
     right: 10px;
   text-transform: uppercase;
   color: #f00;
-  /*background: #F4587A;*/
+  /*background: #ffd700;*/
   font-size: 12px;
   font-weight: 500;
   height: 22px;
@@ -4867,7 +4866,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   padding: 0 20px;
   text-transform: capitalize;
   color: #ffffff;
-  background: #F4587A;
+  background: #ffd700;
   border: 0;
   border-radius: 30px;
   float: left;
@@ -4884,7 +4883,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
     padding: 0 20px;
     text-transform: capitalize;
     color: #ffffff;
-    background: #F4587A;
+    background: #ffd700;
     border: 0;
     border-radius: 30px;
     -webkit-transition: 0.3s;
@@ -5050,11 +5049,11 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   border-radius: 3px;
 }
 .pagination ul li a:hover {
-  background: #EC1C50;
+  background: #ffd700;
   color: #ffffff;
 }
 .pagination ul li.current {
-  background: #EC1C50;
+  background: #ffd700;
   color: #ffffff;
 }
 .pagination ul li.next {
@@ -6631,7 +6630,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   }
 }
 .cart_submit button {
-  background: #F4587A;
+  background: #ffd700;
   border: 0;
   color: #ffffff;
   display: inline-block;
@@ -6658,7 +6657,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   margin-bottom: 20px;
 }
 .coupon_inner button {
-  background: #F4587A;
+  background: #ffd700;
   border: 0;
   color: #ffffff;
   display: inline-block;
@@ -6723,7 +6722,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   color: #000;
   line-height: 36px;
   padding: 5px 15px;
-  background: rgb(249, 187, 202);
+  background: #ffd700;
 
   font-size: 16px;
   font-weight: 500;
@@ -6765,7 +6764,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   text-align: right;
 }
 .checkout_btn a {
-  background: #F4587A;
+  background: #ffd700;
   color: #ffffff;
   font-size: 15px;
   padding: 3px 14px;
@@ -6963,7 +6962,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   padding: 5px 10px;
   text-transform: uppercase;
   color: #ffffff;
-  background: #F4587A;
+  background: #ffd700;
   font-weight: 500;
 }
 .checkout_form input {
@@ -6998,7 +6997,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   padding: 5px 10px;
   text-transform: capitalize;
   color: #ffffff;
-  background: #F4587A;
+  background: #ffd700;
   font-weight: 500;
   -webkit-transition: 0.3s;
   transition: 0.3s;
@@ -7031,7 +7030,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   padding: 5px 10px;
   text-transform: capitalize;
   color: #ffffff;
-  background: #F4587A;
+  background: #ffd700;
   font-weight: 500;
   -webkit-transition: 0.3s;
   transition: 0.3s;
@@ -7257,7 +7256,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   padding: 0 30px;
   text-transform: capitalize;
   border: none;
-  background: #F4587A;
+  background: #ffd700;
   color: #ffffff;
   cursor: pointer;
   -webkit-transition: 0.3s;
@@ -7329,7 +7328,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   width: 100%;
 }
 .account_form button {
-  background: #F4587A;
+  background: #ffd700;
   border: 0;
   color: #ffffff;
   display: inline-block;
@@ -8104,7 +8103,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 .faq-style-wrap .panel-title a[aria-expanded="true"] {
   border-radius: 3px 3px 0 0;
   color: #ffffff;
-  background: #F4587A;
+  background: #ffd700;
 }
 
 .panel.panel-default {
@@ -9484,19 +9483,19 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   background: #3c5b9b;
 }
 .modal_social ul li.facebook a:hover {
-  background: #F4587A;
+  background: #ffd700;
 }
 .modal_social ul li.twitter a {
   background: #1DA1F2;
 }
 .modal_social ul li.twitter a:hover {
-  background: #F4587A;
+  background: #ffd700;
 }
 .modal_social ul li.youtube a {
   background: #BD081B;
 }
 .modal_social ul li.pinterest a:hover {
-  background: #F4587A;
+  background: #ffd700;
 }
 .modal_social ul li.google-plus a {
   background: #DC5043;
@@ -9508,7 +9507,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   background: #DC5043;
 }
 .modal_social ul li.linkedin a:hover {
-  background: #F4587A;
+  background: #ffd700;
 }
 
 .modal_price {
@@ -9570,7 +9569,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 }
 .modal_add_to_cart form button {
   background: none;
-  /*border: 1px solid #EC1C50;*/
+  /*border: 1px solid #ffd700;*/
   margin-left: 10px;
   font-size: 12px;
   font-weight: 700;
@@ -9579,7 +9578,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   line-height: 18px;
   padding: 10px 15px;
   text-transform: uppercase;
-  background: #F4587A;
+  background: #ffd700;
   color: #ffffff;
   -webkit-transition: 0.3s;
   transition: 0.3s;
@@ -9590,9 +9589,9 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   }
 }
 .modal_add_to_cart form button:hover {
-  background: #EC1C50;
+  background: #ffd700;
   color: #ffffff;
-  border-color: #EC1C50;
+  border-color: #ffd700;
 }
 
 .modal_body {

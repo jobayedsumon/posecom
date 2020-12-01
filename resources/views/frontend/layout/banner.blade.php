@@ -14,7 +14,7 @@
 {{--                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">--}}
                         <div class="single_banner m-2">
                             <div class="banner_thumb img-thumbnail">
-                                <a href="{{ route('shop', $category->id) }}"><img class="img-fluid banner_image" src="{{ $parentUrl.'/public/images/category/'.$category->image }}" alt=""></a>
+                                <a href="{{ route('shop', $category->id) }}"><img class="img-fluid banner_image" src="{{ categoryImage($category->image) }}" alt=""></a>
                             </div>
                             <div class="banner_text">
                                 <h3>{{ $category->name }}</h3>

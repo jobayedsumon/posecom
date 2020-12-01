@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Amar Shop - Shop With A Smile</title>
+    <title>{{$general_setting->site_title}}</title>
     <meta name="description" content="">
 
 
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('frontend/img/logo/logo.png')}}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ logo($general_setting->site_logo) }}">
 
     <!-- CSS
     ========================= -->

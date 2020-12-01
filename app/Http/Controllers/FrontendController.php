@@ -18,6 +18,7 @@ use App\Wishlist;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class FrontendController extends Controller
@@ -42,9 +43,11 @@ class FrontendController extends Controller
 //        $allSale = Sale::latest()->where('expire', '>', now())->get();
         $brands = Brand::all();
 
+        $general_setting = DB::table('general_settings')->latest()->first();
+
         return view('frontend.index', compact(
             'categories', 'featuredCategories', 'featuredProdIds',
-            'newProducts'
+            'newProducts', 'general_setting'
         ));
     }
 
