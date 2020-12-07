@@ -37,7 +37,8 @@ class CustomerController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'name' => $data['name'],
-            'phone_number' => $data['phone_number']
+            'phone_number' => $data['phone_number'],
+            'customer_group_id' => 2
         ]);
 
         session()->flash('message', 'Registration completed successfully!');

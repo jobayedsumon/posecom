@@ -66,21 +66,28 @@ function categoryImage($image)
 {
     $parentUrl = env('PARENT_URL');
 
-    return $parentUrl . '/public/images/category/' . $image;
+    return $parentUrl . '/images/category/' . $image;
 }
 
 function productImage($image)
 {
     $parentUrl = env('PARENT_URL');
 
-    return $parentUrl . '/public/images/product/' . $image;
+    return $parentUrl . '/images/product/' . $image;
 }
 
 function logo($image)
 {
     $parentUrl = env('PARENT_URL');
 
-    return $parentUrl . '/public/logo/' . $image;
+    return $parentUrl . '/logo/' . $image;
+}
+
+function brandImage($image)
+{
+    $parentUrl = env('PARENT_URL');
+
+    return $parentUrl . '/images/brand/' . $image;
 }
 
 ?>

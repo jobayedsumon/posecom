@@ -21,6 +21,10 @@ class CreateOrdersTable extends Migration
             $table->string('phone')->nullable();
             $table->foreignId('customer_id')->nullable()->constrained();
             $table->double('amount');
+            $table->string('country');
+            $table->string('state');
+            $table->string('city');
+            $table->string('postal_code');
             $table->string('address');
             $table->string('transaction_id')->nullable();
             $table->string('currency')->nullable();

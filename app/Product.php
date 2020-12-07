@@ -16,7 +16,7 @@ class Product extends Model implements Commentable
      * @var mixed
      */
 
-    use LogsActivity;
+//    use LogsActivity;
     use HasComments;
 
     public function canBeRated(): bool
@@ -63,6 +63,11 @@ class Product extends Model implements Commentable
     public function sale()
     {
         return $this->hasOne(Sale::class)->where('expire', '>', now());
+    }
+
+    public function variant()
+    {
+        return $this->belongsToMany('App\Variant', 'product_variants')->withPivot('id', 'item_code', 'additional_price', 'qty');
     }
 
 }

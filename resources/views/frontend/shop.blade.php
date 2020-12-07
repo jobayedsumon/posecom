@@ -48,13 +48,10 @@
                                 <div class="widget_list widget_color">
                                     <h3>Select Brand</h3>
                                     <select class="form-control p-2" id="colorSelect">
-                                        <option value="-1"></option>
-                                        @php $brands = \App\Brand::all(); @endphp
+                                        <option value="-1">Select Brand</option>
 
-
-
-                                        @forelse($brands as $brand)
-                                            <option class="brand" value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                        @forelse(\App\Brand::all() as $brand)
+                                            <option class="brand" value="{{ $brand->id }}">{{ $brand->title }}</option>
 
                                         @empty
 
@@ -63,22 +60,22 @@
                                     </select>
                                 </div>
 
-                                <div class="widget_list widget_color">
-                                    <h3>Select SIze</h3>
-                                    <select class="form-control">
-                                        <option value="-1"></option>
-                                        @php $sizes = \App\Size::all(); @endphp
+{{--                                <div class="widget_list widget_color">--}}
+{{--                                    <h3>Select SIze</h3>--}}
+{{--                                    <select class="form-control">--}}
+{{--                                        <option value="-1"></option>--}}
+{{--                                        @php $sizes = \App\Size::all(); @endphp--}}
 
-                                        @forelse($sizes as $size)
-                                            <option class="size" value="{{ $size->id }}">
-                                                {{ $size->name }}
-                                            </option>
+{{--                                        @forelse($sizes as $size)--}}
+{{--                                            <option class="size" value="{{ $size->id }}">--}}
+{{--                                                {{ $size->name }}--}}
+{{--                                            </option>--}}
 
-                                        @empty
+{{--                                        @empty--}}
 
-                                        @endforelse
-                                    </select>
-                                </div>
+{{--                                        @endforelse--}}
+{{--                                    </select>--}}
+{{--                                </div>--}}
 
                                 <input type="hidden" id="category_id" value="{{ $shop->id }}">
 
@@ -89,21 +86,21 @@
                         </div>
 
 
-                        <div class="widget_list tags_widget mt-4">
-                            <h3>Product tags</h3>
-                            <div class="tag_cloud">
-                                @php $tags = \App\Tag::all(); @endphp
+{{--                        <div class="widget_list tags_widget mt-4">--}}
+{{--                            <h3>Product tags</h3>--}}
+{{--                            <div class="tag_cloud">--}}
+{{--                                @php $tags = \App\Tag::all(); @endphp--}}
 
-                                @forelse($tags as $tag)
+{{--                                @forelse($tags as $tag)--}}
 
-                                    <a class="customButton" href="{{ route('tag-search', $tag->name) }}">{{ $tag->name }}</a>
-                                @empty
+{{--                                    <a class="customButton" href="{{ route('tag-search', $tag->name) }}">{{ $tag->name }}</a>--}}
+{{--                                @empty--}}
 
-                                @endforelse
+{{--                                @endforelse--}}
 
 
-                            </div>
-                        </div>
+{{--                            </div>--}}
+{{--                        </div>--}}
 
 
                     </aside>
@@ -115,7 +112,7 @@
                     <!--shop wrapper start-->
 
                     <div class="shop_banner_area">
-                        <img src="{{ asset($shop->image) }}" class="img-fluid single_slider w-100" alt="">
+                        <img src="{{ categoryImage($shop->image) }}" class="img-fluid single_slider w-100" alt="">
                     </div>
 
                     <!--shop toolbar start-->
@@ -156,75 +153,21 @@
                          @forelse($data as $product)
 
                         <div class="col-lg-4 col-md-4 col-sm-6 p-1">
-                            <div class="single_product">
-                                <div class="product_thumb">
-                                    <a class="primary_img" href="{{ route('product-details', [$product->category->id, $product->sub_category->id, $product->id]) }}">
-                                        <img src="{{ asset($product->image_primary) }}" alt=""></a>
-                                    <a class="secondary_img" href="{{ route('product-details', [$product->category->id, $product->sub_category->id, $product->id]) }}">
-                                        <img src="{{ asset($product->image_secondary) }}" alt=""></a>
-                                    <div class="label_product">
-                                        <span class="label_sale">-{{ $product->discount }}%</span>
-                                    </div>
-                                    <div class="action_links">
-                                        <ul>
-                                            <li class="wishlist"><a href="javascript:void(0)" class="wishlistButton" data-id="{{ $product->id }}"
-                                                                    title="Add to Wishlist"><i class="icon-heart icons"></i></a></li>
-                                            <li class="compare">
-                                                <a href="javascript:void(0)" class="compareButton" data-id="{{ $product->id }}" title="Add to Compare">
-                                                    <i class="icon-refresh icons"></i></a></li>
-                                            <li class="quick_button">
-                                                <a data-toggle="modal" data-target="#view-modal"
-                                                   class="quickButton"
-                                                   title="Quick View"
-                                                   data-url="{{ route('dynamicModal',['id'=>$product->id])}}"
-                                                >
-                                                    <i class="icon-magnifier-add icons"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="product_content grid_content">
-                                    <h4 class="product_name"><a href="{{ route('product-details', [$product->category->id, $product->sub_category->id, $product->id]) }}">
-                                            {{ $product->name }}</a></h4>
-                                    <div class="price_box">
-                                        <span class="current_price">BDT {{ $product->price - round($product->price * $product->discount / 100) }}</span>
-                                        @if(!$product->discount == 0)
-                                            <span class="old_price">BDT {{ $product->price }}</span>
-                                        @endif
-                                    </div>
-                                    <div class="add_to_cart">
-                                        <a data-toggle="modal" data-target="#view-modal"
-                                           class="quickButton"
-                                           data-url="{{ route('dynamicModal',['id'=>$product->id])}}"
-                                        >+ Add to cart</a>
-                                    </div>
-                                </div>
-                                <div class="product_content list_content">
-                                    <h4 class="product_name"><a href="{{ route('product-details', [$product->category->id, $product->sub_category->id, $product->id]) }}">
-                                            {{ $product->name }}</a></h4>
-                                    <div class="price_box">
-                                        <span class="current_price">BDT {{ $product->price - round($product->price * $product->discount / 100) }}</span>
-                                        @if(!$product->discount == 0)
-                                            <span class="old_price">BDT {{ $product->price }}</span>
-                                        @endif
-                                    </div>
-                                    <div class="product_desc">
-                                        {!! $product->short_description !!}
-                                    </div>
-                                    <div class="list_action_wrapper">
-                                        <div class="list_cart_btn">
-                                            <a data-toggle="modal" data-target="#view-modal"
-                                               class="quickButton"
-                                               data-url="{{ route('dynamicModal',['id'=>$product->id])}}"
-                                            >+ Add to cart</a>
-                                        </div>
+                            <article class=" single_product m-2">
+                                <figure class="h-full flex flex-column justify-start">
+                                    <div class="product_thumb">
+                                        <a class="primary_img" href="{{ route('product-details', [$product->category->slug, $product->slug]) }}">
+                                            <img src="{{ productImage($product->image) }}" alt=""></a>
+
+                                        {{--                                                    <div class="label_product">--}}
+                                        {{--                                                        <span class="label_sale">-{{ $product->discount }}%</span>--}}
+                                        {{--                                                    </div>--}}
                                         <div class="action_links">
                                             <ul>
                                                 <li class="wishlist"><a href="javascript:void(0)" class="wishlistButton" data-id="{{ $product->id }}"
                                                                         title="Add to Wishlist"><i class="icon-heart icons"></i></a></li>
                                                 <li class="compare">
-                                                    <a  title="Add to Compare">
+                                                    <a href="javascript:void(0)" class="compareButton" data-id="{{ $product->id }}" title="Add to Compare">
                                                         <i class="icon-refresh icons"></i></a></li>
                                                 <li class="quick_button">
                                                     <a data-toggle="modal" data-target="#view-modal"
@@ -238,8 +181,24 @@
                                             </ul>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
+                                    <figcaption class="product_content">
+                                        <h4 class="product_name"><a href="{{ route('product-details', [$product->category->slug, $product->slug]) }}">
+                                                {{ $product->name }}</a></h4>
+                                        <div class="price_box">
+                                            <span class="current_price">BDT {{ $product->promotion_price ?? $product->price }}</span>
+                                            @if($product->promotion_price)
+                                                <span class="old_price">BDT {{ $product->price }}</span>
+                                            @endif
+                                        </div>
+                                        <div class="add_to_cart">
+                                            <a data-toggle="modal" data-target="#view-modal"
+                                               class="quickButton"
+                                               data-url="{{ route('dynamicModal',['id'=>$product->id])}}"
+                                            >+ Add to cart</a>
+                                        </div>
+                                    </figcaption>
+                                </figure>
+                            </article>
                         </div>
 
                          @empty

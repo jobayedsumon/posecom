@@ -46,7 +46,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"> Shop </a>
                             <ul class="dropdown-menu">
-                                @forelse($categories as $category)
+                                @forelse(\App\Category::all() as $category)
                                     <li class="has-megasubmenu">
                                         <a class="dropdown-item" href="{{ route('shop', $category->slug) }}"> {{ $category->name }} </a>
 {{--                                        <div class="megasubmenu dropdown-menu">--}}

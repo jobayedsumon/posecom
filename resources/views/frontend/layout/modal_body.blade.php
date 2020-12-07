@@ -17,12 +17,12 @@
                                 <div class="tab-content product-details-large">
                                     <div class="tab-pane fade show active" id="tab1" role="tabpanel" >
                                         <div class="modal_tab_img">
-                                            <a href="#"><img src="{{ asset($data->image_primary)}}" alt=""></a>
+                                            <a href="#"><img src="{{ productImage($data->image) }}" alt=""></a>
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="tab2" role="tabpanel">
                                         <div class="modal_tab_img">
-                                            <a href="#"><img src="{{ asset($data->image_secondary)}}" alt=""></a>
+                                            <a href="#"><img src="{{ productImage($data->image) }}" alt=""></a>
                                         </div>
                                     </div>
 
@@ -31,11 +31,11 @@
                                     <ul class="nav product_navactive owl-carousel" role="tablist">
                                         <li >
                                             <a class="nav-link active" data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1" aria-selected="false">
-                                                <img src="{{ asset($data->image_primary)}}" alt=""></a>
+                                                <img src="{{ productImage($data->image) }}" alt=""></a>
                                         </li>
                                         <li>
                                             <a class="nav-link" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="false">
-                                                <img src="{{ asset($data->image_secondary)}}" alt=""></a>
+                                                <img src="{{ productImage($data->image) }}" alt=""></a>
                                         </li>
 
 
@@ -49,55 +49,53 @@
                                     <h2>{{ $data->name }}</h2>
                                 </div>
                                 <div class="modal_price mb-10">
-                                    @php
-                                    $discount = $data->sale ? $data->sale->percentage : $data->discount;
-                                    @endphp
-                                    <span class="new_price">BDT {{ $data->price - round($data->price * $discount / 100) }}</span>
-                                    @if(!$data->discount == 0)
+
+                                    <span class="new_price">BDT {{ $data->promotion_price ?? $data->price }}</span>
+                                    @if($data->promotion_price)
                                         <span class="old_price">BDT {{ $data->price }}</span>
                                     @endif
                                 </div>
                                 <div class="modal_description mb-15">
-                                    {!! $data->short_description !!}
+                                    {!! $data->product_details !!}
                                 </div>
 
-                                <div class="variants_selects">
-                                    <div class="product_variant color">
-                                        <h3>Available Options</h3>
-                                        <label>color</label>
-                                        <ul>
-                                            @forelse($data->colors as $color)
-                                                <div class="form-check-inline">
-                                                    <label class="form-check-label flex flex-col-reverse items-center">
-                                                        <input type="radio" class="form-check-input colorId" name="color" value="{{ $color->id }}">
-                                                        <li class=""><a style="background-color: {{ $color->name }}"></a></li>
-                                                    </label>
-                                                </div>
+{{--                                <div class="variants_selects">--}}
+{{--                                    <div class="product_variant color">--}}
+{{--                                        <h3>Available Options</h3>--}}
+{{--                                        <label>color</label>--}}
+{{--                                        <ul>--}}
+{{--                                            @forelse($data->colors as $color)--}}
+{{--                                                <div class="form-check-inline">--}}
+{{--                                                    <label class="form-check-label flex flex-col-reverse items-center">--}}
+{{--                                                        <input type="radio" class="form-check-input colorId" name="color" value="{{ $color->id }}">--}}
+{{--                                                        <li class=""><a style="background-color: {{ $color->name }}"></a></li>--}}
+{{--                                                    </label>--}}
+{{--                                                </div>--}}
 
-                                            @empty
-                                            @endforelse
+{{--                                            @empty--}}
+{{--                                            @endforelse--}}
 
-                                        </ul>
+{{--                                        </ul>--}}
 
-                                        <div class="size">
-                                            <label>size</label>
-                                            <ul class="">
-                                                @forelse($data->sizes as $size)
-                                                    <div class="form-check-inline">
-                                                        <label class="form-check-label flex flex-col-reverse items-center">
-                                                            <input type="radio" class="form-check-input sizeId" name="size" value="{{ $size->id }}" required>
-                                                            <li class=""><a>{{ $size->name }}</a></li>
-                                                        </label>
-                                                    </div>
-                                                @empty
-                                                @endforelse
-
-
-                                            </ul>
-                                        </div>
+{{--                                        <div class="size">--}}
+{{--                                            <label>size</label>--}}
+{{--                                            <ul class="">--}}
+{{--                                                @forelse($data->sizes as $size)--}}
+{{--                                                    <div class="form-check-inline">--}}
+{{--                                                        <label class="form-check-label flex flex-col-reverse items-center">--}}
+{{--                                                            <input type="radio" class="form-check-input sizeId" name="size" value="{{ $size->id }}" required>--}}
+{{--                                                            <li class=""><a>{{ $size->name }}</a></li>--}}
+{{--                                                        </label>--}}
+{{--                                                    </div>--}}
+{{--                                                @empty--}}
+{{--                                                @endforelse--}}
 
 
-                                    </div>
+{{--                                            </ul>--}}
+{{--                                        </div>--}}
+
+
+{{--                                    </div>--}}
                                     <div class="modal_add_to_cart">
                                         <form action="">
                                             <input type="hidden" id="productId_modal" value="{{ $data->id }}" required>
@@ -105,7 +103,7 @@
                                             <a id="addToCartModal" class="customButton py-3 px-5">Add to Cart</a>
                                         </form>
                                     </div>
-                                </div>
+{{--                                </div>--}}
 
 
                                 <div class="modal_social">

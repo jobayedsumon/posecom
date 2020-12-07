@@ -62,20 +62,20 @@
 
                                 @php
                                     $product = \App\Product::findOrFail($data['product_id']);
-                                    $color = \App\Color::find($data['color_id']);
-                                    $size = \App\Size::find($data['size_id']);
+                                    $color = DB::table('product_variants')->find($data['color_id']);
+                                    $size = DB::table('product_variants')->find($data['size_id']);
 
                                 @endphp
 
                                 <tr>
                                    <td class="product_remove"><a href="/cart/remove/{{ $data['cart_id'] }}"><i class="fa fa-trash-o"></i></a></td>
-                                    <td class="product_thumb"><a href="{{ route('product-details', [$product->category_id, $product->sub_category_id, $product->id]) }}"><img src="{{ asset($product->image_primary) }}" alt=""></a></td>
-                                    <td class="product_name"><a href="{{ route('product-details', [$product->category_id, $product->sub_category_id, $product->id]) }}">{{ $product->name }}</a></td>
-                                    <td class="product-price"><span style="background-color: {{ $color ? $color->name : '' }}" class="p-3"> &nbsp;</span></td>
-                                    <td class="product-price">{{ $size ? $size->name : '' }}</td>
-                                    @php $discount = $product->sale ? $product->sale->percentage : $product->discount; @endphp
-                                    <td class="product-price">BDT {{ $cart_price = $discount ? $product->price - round($product->price * $discount / 100) : $product->price }}</td>
-                                    <td class="product_quantity"><label>Quantity</label> <input min="1" max="100" name="count[]" value="{{ $data['count'] }}" type="number"></td>
+                                    <td class="product_thumb"><a href="{{ route('product-details', [$product->category->slug, $product->slug]) }}"><img src="{{ productImage($product->image) }}" alt=""></a></td>
+                                    <td class="product_name"><a href="{{ route('product-details', [$product->category->slug, $product->slug]) }}">{{ $product->name }}</a></td>
+                                    <td class="product-price">{{ $color ? $color->item_code : '' }}</td>
+                                    <td class="product-price">{{ $size ? $size->item_code : '' }}</td>
+
+                                    <td class="product-price">BDT {{ $cart_price = ($product->promotion_price ?? $product->price) + $color->additional_price + $size->additional_price }}</td>
+                                    <td class="product_quantity"><label>Quantity</label> <input min="1" max="10000" name="count[]" value="{{ $data['count'] }}" type="number"></td>
                                     <td class="product_total">BDT {!! $row_total = $cart_price * $data['count'] !!}</td>
 
                                     @php

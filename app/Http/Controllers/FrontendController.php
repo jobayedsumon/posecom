@@ -43,20 +43,19 @@ class FrontendController extends Controller
 //        $allSale = Sale::latest()->where('expire', '>', now())->get();
         $brands = Brand::all();
 
-        $general_setting = DB::table('general_settings')->latest()->first();
+
 
         return view('frontend.index', compact(
             'categories', 'featuredCategories', 'featuredProdIds',
-            'newProducts', 'general_setting'
+            'newProducts'
         ));
     }
 
-    public function shop($shopId)
+    public function shop($slug)
     {
-        $shop = Category::findOrFail($shopId);
+        $shop = Category::where('slug', $slug)->first();
         $categories = Category::all();
         $data = $shop->products()->paginate(9);
-
 
         return view('frontend.shop', compact('categories', 'data', 'shop'));
     }
@@ -72,17 +71,18 @@ class FrontendController extends Controller
         return view('frontend.subshop', compact('subshop', 'shop', 'data'));
     }
 
-    public function product_details($shopId, $subId, $productId)
+    public function product_details($shopSlug, $productSlug)
     {
-        $category = Category::findOrFail($shopId);
-        $sub_category = SubCategory::findOrFail($subId);
-        $product = Product::where('category_id', $shopId)->where('sub_category_id', $subId)->findOrFail($productId);
-        $related_products = Product::where('category_id', $shopId)->limit(20)->get();
+        $category = Category::where('slug', $shopSlug)->first();
+        $product = Product::with('variant')->where('category_id', $category->id)->where('slug', $productSlug)->first();
+        $related_products = Product::where('category_id', $category->id)->limit(20)->get();
         $brands = Brand::all();
+
+        $product_variant = $product->variant->groupBy('name');
 
 
         return view('frontend.product-details',
-            compact('category', 'sub_category', 'product', 'related_products', 'brands'));
+            compact('category', 'product', 'related_products', 'brands', 'product_variant'));
     }
 
     public function wishlist()
@@ -154,13 +154,13 @@ class FrontendController extends Controller
 
         $customer = \auth('customer')->user();
 
-        $billing_address = $request->street . '+';
-        $billing_address .= $request->city . '+';
-        $billing_address .= $request->district . '+';
-        $billing_address .= ucfirst($request->division);
-
         $customer->update([
-            'billing_address' => $billing_address,
+            'country' => 'bangladesh',
+            'state' => $request->state,
+            'district' => $request->district,
+            'city' => $request->city,
+            'postal_code' => $request->postal_code,
+            'address' => $request->address,
         ]);
 
         return redirect(route('my-account'));
@@ -209,7 +209,7 @@ class FrontendController extends Controller
 
     public function brand_search($brandName)
     {
-        $prodIds = Brand::where('name', $brandName)->first()->products()->pluck('id');
+        $prodIds = Brand::where('title', $brandName)->first()->products()->pluck('id');
 
 
         $products = Product::whereIn('id', $prodIds)->get();

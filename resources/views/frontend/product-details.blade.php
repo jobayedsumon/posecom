@@ -38,22 +38,22 @@
                     <div class="product-details-tab">
                         <div id="img-1" class="zoomWrapper single-zoom">
                             <a href="#">
-                                <img id="zoom1" src="{{ asset($product->image_primary) }}" data-zoom-image="{{ asset($product->image_secondary) }}" alt="big-1">
+                                <img id="zoom1" src="{{ productImage($product->image) }}" data-zoom-image="{{ productImage($product->image) }}" alt="big-1">
                             </a>
                         </div>
                         <div class="single-zoom-thumb">
                             <ul class="s-tab-zoom owl-carousel single-product-active" id="gallery_01">
                                 <li>
-                                    <a href="#" class="elevatezoom-gallery active" data-update="" data-image="{{ asset($product->image_primary) }}"
-                                       data-zoom-image="{{ asset($product->image_primary) }}">
-                                        <img src="{{ asset($product->image_primary) }}" alt="zo-th-1"/>
+                                    <a href="#" class="elevatezoom-gallery active" data-update="" data-image="{{ productImage($product->image) }}"
+                                       data-zoom-image="{{ productImage($product->image) }}">
+                                        <img src="{{ productImage($product->images) }}" alt="zo-th-1"/>
                                     </a>
 
                                 </li>
                                 <li>
-                                    <a href="#" class="elevatezoom-gallery active" data-update="" data-image="{{ asset($product->image_secondary) }}"
-                                       data-zoom-image="{{ asset($product->image_secondary) }}">
-                                        <img src="{{ asset($product->image_secondary) }}" alt="zo-th-1"/>
+                                    <a href="#" class="elevatezoom-gallery active" data-update="" data-image="{{ productImage($product->image) }}"
+                                       data-zoom-image="{{ productImage($product->image) }}">
+                                        <img src="{{ productImage($product->image) }}" alt="zo-th-1"/>
                                     </a>
 
                                 </li>
@@ -64,7 +64,7 @@
                 </div>
                 <div class="col-lg-7 col-md-7">
                     <div class="product_d_right">
-                       <form action="#">
+                       <form action="#" id="app">
                             <div class="productd_title_nav">
                                 <h1><a href="#">{{ $product->name }}</a></h1>
                                 <input type="hidden" id="productId" value="{{ $product->id }}">
@@ -79,53 +79,53 @@
                                </ul>
                            </div>
 
-                           @php $discount = $product->sale ? $product->sale->percentage : $product->discount; @endphp
 
-                            <div class="price_box">
-                                <span id="currentPrice" class="current_price">BDT {{ $discount ? $product->price - round($product->price * $discount / 100) : $product->price }}</span>&nbsp;
-                                @if(!$product->discount == 0)
-                                <span id="oldPrice" class="old_price">BDT {{ $product->price }}</span>
-                                @endif
-                            </div>
+
+                           <div class="price_box">
+                               <span class="current_price">BDT {{ $product->promotion_price ?? $product->price }}</span>
+                               @if($product->promotion_price)
+                                   <span class="old_price">BDT {{ $product->price }}</span>
+                               @endif
+                           </div>
+
                             <div class="product_desc">
-                                {!! $product->short_description !!}
+                                {!! $product->product_details !!}
                             </div>
+
                             <div class="product_variant color">
+
                                 <h3>Available Options</h3>
-                                <label>color</label>
-                                <ul>
-                                    @forelse($product->colors as $color)
-                                        <div class="form-check-inline">
-                                            <label class="form-check-label flex flex-col-reverse items-center">
-                                                <input type="radio" class="form-check-input colorId" name="color" value="{{ $color->id }}">
-                                                <li class=""><a style="background-color: {{ $color->name }}"></a></li>
-                                            </label>
-                                        </div>
-
-                                    @empty
-                                    @endforelse
-
-                                </ul>
-
-                                <div class="size">
-                                    <label>size</label>
-                                    <ul class="">
-                                        @forelse($product->sizes as $size)
-                                            <div class="form-check-inline">
-                                                <label class="form-check-label flex flex-col-reverse items-center">
-                                                    <input type="radio" class="form-check-input sizeId" name="size" value="{{ $size->id }}">
-                                                    <li class=""><a>{{ $size->name }}</a></li>
-                                                </label>
-                                            </div>
-                                        @empty
-                                        @endforelse
 
 
-                                    </ul>
-                                </div>
+                                @forelse($product_variant as $name => $variant)
+
+                                    <div class="size">
+                                        <label>{{ $name }}: </label>
+                                        <ul class="">
+                                            @forelse($variant as $v)
+                                                <div class="form-check-inline">
+                                                    <label class="form-check-label flex flex-col-reverse items-center">
+                                                        <input type="radio" class="form-check-input mt-1 "
+                                                               data-item-code="{{ $v->pivot->item_code }}" name="{{ $name }}" value="{{ $v->pivot->id }}"
+                                                               data-add-price="{{ $v->pivot->additional_price }}" data-quantity="{{ $v->pivot->qty }}">
+                                                        <li class=""><a>{{ ucfirst($v->pivot->item_code) }}</a></li>
+
+                                                    </label>
+                                                </div>
+                                            @empty
+                                            @endforelse
+
+
+                                        </ul>
+                                    </div>
+
+                                @empty
+                                @endforelse
+
+
 
                                 <div class="mt-2">
-                                    <label for="">Inventory : {!! $product->quantity > 0 ? $product->quantity : 0 !!} products available</label>
+                                    <label for="">Inventory : {!! $product->qty > 0 ? $product->qty : 0 !!} products available</label>
                                 </div>
 
 
@@ -135,8 +135,8 @@
 
                             <div class="product_variant quantity">
                                 <label>quantity</label>
-                                <input min="1" max="100" id="count" value="1" type="number">
-                                @if($product->quantity > 0)
+                                <input min="1" max="100000" id="count" value="1" type="number">
+                                @if($product->qty > 0)
                                 <a href="javascript:void(0)" class="customButton px-2" id="addToCart">add to cart</a>
                                 @else
                                 <p class="ml-2 font-bold text-danger">Out of Stock!</p>
@@ -151,17 +151,18 @@
                                </ul>
                             </div>
                             <div class="product_meta">
-                                <span>Category: <a href="{{ route('shop', $category->id) }}">{{ $category->name }}</a></span>
+                                <div>Category: <a href="{{ route('shop', $category->slug) }}">{{ $category->name }}</a></div>
+                                <div>Brand: <a href="{{ route('brand-search', $product->brand->title) }}">{{ $product->brand->title }}</a></div>
                             </div>
-                           <div class="product_meta">
-                               <span>Tags:
-                                   @forelse($product->tags as $tag)
-                                       <a href="{{ route('tag-search', $tag->name) }}">{{ $tag->name }}</a>
-                                   @empty
-                                   @endforelse
+{{--                           <div class="product_meta">--}}
+{{--                               <span>Tags:--}}
+{{--                                   @forelse($product->tags as $tag)--}}
+{{--                                       <a href="{{ route('tag-search', $tag->name) }}">{{ $tag->name }}</a>--}}
+{{--                                   @empty--}}
+{{--                                   @endforelse--}}
 
-                               </span>
-                           </div>
+{{--                               </span>--}}
+{{--                           </div>--}}
 
                         </form>
 {{--                        <div class="priduct_social">--}}
@@ -192,9 +193,9 @@
                                 <li >
                                     <a class="active" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="false">Description</a>
                                 </li>
-                                <li>
-                                     <a data-toggle="tab" href="#sheet" role="tab" aria-controls="sheet" aria-selected="false">Specification</a>
-                                </li>
+{{--                                <li>--}}
+{{--                                     <a data-toggle="tab" href="#sheet" role="tab" aria-controls="sheet" aria-selected="false">Specification</a>--}}
+{{--                                </li>--}}
                                 <li>
                                     <a data-toggle="tab" href="#reviews" role="tab" aria-controls="reviews" aria-selected="false">Reviews ({{ $product->comments()->count() }})</a>
                                 </li>
@@ -204,34 +205,27 @@
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="info" role="tabpanel" >
                                 <div class="product_info_content">
-                                    {!! $product->description !!}
+                                    {!! $product->product_details !!}
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="sheet" role="tabpanel" >
-                                <div class="product_d_table">
-                                   <form action="#">
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="first_child">Compositions</td>
-                                                    <td>{{ $product->specifications ?  $product->specifications->compositions : '' }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="first_child">Styles</td>
-                                                    <td>{{ $product->specifications ?  $product->specifications->styles : '' }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="first_child">Properties</td>
-                                                    <td>{{ $product->specifications ?  $product->specifications->properties : '' }}</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </form>
-                                </div>
-                                <div class="product_info_content">
-                                    {!! $product->short_description !!}
-                                </div>
-                            </div>
+{{--                            <div class="tab-pane fade" id="sheet" role="tabpanel" >--}}
+{{--                                <div class="product_d_table">--}}
+{{--                                   <form action="#">--}}
+{{--                                        <table>--}}
+{{--                                            <tbody>--}}
+{{--                                                <tr>--}}
+{{--                                                    <td class="first_child">Type</td>--}}
+{{--                                                    <td>{{ $product->type ?  $product->type : '' }}</td>--}}
+{{--                                                </tr>--}}
+
+{{--                                            </tbody>--}}
+{{--                                        </table>--}}
+{{--                                    </form>--}}
+{{--                                </div>--}}
+{{--                                <div class="product_info_content">--}}
+{{--                                    {!! $product->short_description !!}--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
 
                             <div class="tab-pane fade" id="reviews" role="tabpanel" >
                                 <div class="reviews_wrapper">
@@ -347,48 +341,52 @@
 
                 @forelse($related_products as $related_product)
 
-                        <article class="single_product  mr-3">
-                            <figure class="h-full flex flex-column justify-start">
-                                <div class="product_thumb">
-                                    <a class="primary_img" href="{{ route('product-details', [$related_product->category->id, $related_product->sub_category->id, $related_product->id]) }}">
-                                        <img src="{{ asset($related_product->image_primary)}}" alt=""></a>
-                                    <a class="secondary_img" href="{{ route('product-details', [$related_product->category->id, $related_product->sub_category->id, $related_product->id]) }}">
-                                        <img src="{{ asset($related_product->image_secondary)}}" alt=""></a>
-                                    <div class="label_product">
-                                        <span class="label_sale">-{{ $related_product->discount }}%</span>
-                                    </div>
-                                    <div class="action_links">
-                                        <ul>
-                                            <li class="wishlist"><a href="javascript:void(0)" class="wishlistButton" data-id="{{ $related_product->id }}" title="Add to Wishlist"><i class="icon-heart icons"></i></a></li>
-                                            <li class="compare">
-                                                <a href="javascript:void(0)" class="compareButton" data-id="{{ $related_product->id }}" title="Add to Compare">
-                                                    <i class="icon-refresh icons"></i></a></li>
-                                            <li class="quick_button">
-                                                <a data-toggle="modal" data-target="#view-modal"
-                                                        class="quickButton"
-                                                        data-url="{{ route('dynamicModal',['id'=>$related_product->id])}}"
-                                                >
-                                                    <i class="icon-magnifier-add icons"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
+                    <article class=" single_product mr-3">
+                        <figure class="h-full flex flex-column justify-start">
+                            <div class="product_thumb">
+                                <a class="primary_img" href="{{ route('product-details', [$related_product->category->id, $related_product->id]) }}">
+                                    <img src="{{ productImage($related_product->image) }}" alt=""></a>
+
+                                {{--                                                    <div class="label_product">--}}
+                                {{--                                                        <span class="label_sale">-{{ $related_product->discount }}%</span>--}}
+                                {{--                                                    </div>--}}
+                                <div class="action_links">
+                                    <ul>
+                                        <li class="wishlist"><a href="javascript:void(0)" class="wishlistButton" data-id="{{ $related_product->id }}"
+                                                                title="Add to Wishlist"><i class="icon-heart icons"></i></a></li>
+                                        <li class="compare">
+                                            <a href="javascript:void(0)" class="compareButton" data-id="{{ $related_product->id }}" title="Add to Compare">
+                                                <i class="icon-refresh icons"></i></a></li>
+                                        <li class="quick_button">
+                                            <a data-toggle="modal" data-target="#view-modal"
+                                               class="quickButton"
+                                               title="Quick View"
+                                               data-url="{{ route('dynamicModal',['id'=>$related_product->id])}}"
+                                            >
+                                                <i class="icon-magnifier-add icons"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </div>
-                                <figcaption class="product_content">
-                                    <h4 class="product_name"><a href="{{ route('product-details', [$related_product->category->id, $related_product->sub_category->id, $related_product->id]) }}">
-                                            {{ $related_product->name }}</a></h4>
-                                    <div class="price_box">
-                                        <span class="current_price">BDT {{ $related_product->price - round($related_product->price * $related_product->discount / 100) }}</span>
-                                        @if(!$product->discount == 0)
-                                            <span class="old_price">BDT {{ $product->price }}</span>
-                                        @endif
-                                    </div>
-                                    <div class="add_to_cart">
-                                        <a href="{{ route('cart') }}">+ Add to cart</a>
-                                    </div>
-                                </figcaption>
-                            </figure>
-                        </article>
+                            </div>
+                            <figcaption class="product_content">
+                                <h4 class="product_name"><a href="{{ route('product-details', [$related_product->category->id, $related_product->id]) }}">
+                                        {{ $related_product->name }}</a></h4>
+                                <div class="price_box">
+                                    <span class="current_price">BDT {{ $related_product->promotion_price ?? $related_product->price }}</span>
+                                    @if($related_product->promotion_price)
+                                        <span class="old_price">BDT {{ $related_product->price }}</span>
+                                    @endif
+                                </div>
+                                <div class="add_to_cart">
+                                    <a data-toggle="modal" data-target="#view-modal"
+                                       class="quickButton"
+                                       data-url="{{ route('dynamicModal',['id'=>$related_product->id])}}"
+                                    >+ Add to cart</a>
+                                </div>
+                            </figcaption>
+                        </figure>
+                    </article>
 
                 @empty
                 @endforelse
@@ -417,8 +415,6 @@
 
 
 @section('script')
-
-
 
 @endsection
 

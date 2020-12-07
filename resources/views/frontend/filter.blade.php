@@ -12,7 +12,7 @@
         <div class="widget_list widget_color">
             <h3>Select Brand</h3>
             <select class="form-control p-2" id="colorSelect">
-                <option value="-1"></option>
+                <option value="-1">Select Brand</option>
                 @php $brands = \App\Brand::all(); @endphp
 
 

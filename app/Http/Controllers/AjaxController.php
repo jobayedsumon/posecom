@@ -70,9 +70,14 @@ class AjaxController extends Controller
         );
 
         $product = Product::find($request->product_id);
-        $discount = $product->sale ? $product->sale->percentage : $product->discount;
 
-        $product_price = $product->price - round($product->price * $discount / 100);
+        $product_price = $product->promotion_price ?? $product->price;
+
+        $product_variation = DB::table('product_variants')->whereIn('id', [$request->color_id, $request->size_id])->get();
+
+        foreach ($product_variation as $variation) {
+            $product_price += $variation->additional_price;
+        }
 
 
         $product_price *= $request->count;
@@ -110,8 +115,8 @@ class AjaxController extends Controller
 
                 $product = Product::findOrFail($data['product_id']);
 
-                if ($request->count[$i] > $product->quantity) {
-                    $data['count'] = $product->quantity;
+                if ($request->count[$i] > $product->qty) {
+                    $data['count'] = $product->qty;
                     session()->put('msg', 'Product quantity exceeded and set to maximum');
                 } else {
                     $data['count'] = $request->count[$i];
@@ -120,8 +125,7 @@ class AjaxController extends Controller
 
                 $newCart[] = $data;
 
-                $discount = $product->sale ? $product->sale->percenatge : $product->discount;
-                $product_price = $discount ? $product->price - round($product->price * $discount / 100) : $product->price;
+                $product_price = $product->promotion_price ?? $product->price;
 
                 $product_price *= $data['count'];
 
@@ -254,7 +258,7 @@ class AjaxController extends Controller
     public function filter_product_shop(Request $request)
     {
         $brand = $request->brand_id;
-        $size = $request->size_id;
+//        $size = $request->size_id;
 
         $minPrice = $request->min_amount;
         $maxPrice = $request->max_amount;
@@ -269,10 +273,10 @@ class AjaxController extends Controller
             $data->whereIn('id', $prodIds);
         }
 
-        if ($size != -1) {
-            $prodIds = Size::find($size)->products()->pluck('id');
-            $data->whereIn('id', $prodIds);
-        }
+//        if ($size != -1) {
+//            $prodIds = Size::find($size)->products()->pluck('id');
+//            $data->whereIn('id', $prodIds);
+//        }
 
         $data = $data->get();
 

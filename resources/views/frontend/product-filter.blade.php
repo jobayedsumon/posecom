@@ -21,7 +21,7 @@
 
                         <div class="single_product col-md-4 h-auto">
                             <div class="product_thumb">
-                                <a class="primary_img" href="{{ route('product-details', [$product->category->id, $product->id]) }}">
+                                <a class="primary_img" href="{{ route('product-details', [$product->category->slug, $product->slug]) }}">
                                     <img src="{{ productImage($product->image) }}" alt=""></a>
 
 {{--                                <div class="label_product">--}}
@@ -46,7 +46,7 @@
                                 </div>
                             </div>
                             <div class="product_content grid_content">
-                                <h4 class="product_name"><a href="{{ route('product-details', [$product->category->id, $product->id]) }}">
+                                <h4 class="product_name"><a href="{{ route('product-details', [$product->category->slug, $product->slug]) }}">
                                         {{ $product->name }}</a></h4>
                                 <div class="price_box">
                                     <span class="current_price">BDT {{ $product->promotion_price ?? $product->price }}</span>

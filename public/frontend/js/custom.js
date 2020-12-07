@@ -1,3 +1,5 @@
+
+
 function sweetAlter(icon, title) {
     Swal.fire({
         backdrop: false,
@@ -64,13 +66,13 @@ $('.compareButton').click(function (e) {
 
 $('#addToCart').click(function (e) {
 
-    if (!$("input[name='color']").is(':checked')) {
-        return alert('Please select color');
-    }
-
-    if (!$("input[name='size']").is(':checked')) {
-        return alert('Please select size');
-    }
+    // if (!$("input[name='color']").is(':checked')) {
+    //     return alert('Please select color');
+    // }
+    //
+    // if (!$("input[name='size']").is(':checked')) {
+    //     return alert('Please select size');
+    // }
 
     let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
@@ -90,6 +92,7 @@ $('#addToCart').click(function (e) {
             count: count,
         },
         success: function (data) {
+            console.log(data);
             sweetAlter('success', 'Product added to cart');
             $('.cart_sub_total').text('BDT ' + data.cart_sub_total);
             let cart_total_amount = parseInt(data.cart_sub_total);
@@ -116,20 +119,18 @@ $('.quickButton').click(function (e) {
 
     var url = $(this).data('url');
 
-    $('#dynamic-content').html(''); // leave it blank before ajax call
-    $('#modal-loader').show();      // load ajax loader
+    $('#dynamic-content').html('');
+    $('#modal-loader').show();
 
     $.ajax({
         url: url,
         type: 'GET',
         dataType: 'html'
-    })
-        .done(function (data) {
+    }).done(function (data) {
             $('#dynamic-content').html('');
-            $('#dynamic-content').html(data); // load response
-            $('#modal-loader').hide();        // hide ajax loader
-        })
-        .fail(function () {
+            $('#dynamic-content').html(data);
+            $('#modal-loader').hide();
+        }).fail(function () {
             $('#dynamic-content').html('<i class="glyphicon glyphicon-info-sign"/> Something went wrong, Please try again...');
             $('#modal-loader').hide();
         });
@@ -180,10 +181,10 @@ $('#filterShop').on('click', function (e) {
     let category_id = $('#category_id').val();
 
     let brand = parseInt($('.brand:selected').val());
-    let size = parseInt($('.size:selected').val());
+
 
     if (isNaN(brand)) brand = -1;
-    if (isNaN(size)) size = -1;
+
 
     let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
@@ -193,7 +194,6 @@ $('#filterShop').on('click', function (e) {
         data: {
             _token: CSRF_TOKEN,
             brand_id: brand,
-            size_id: size,
             category_id: category_id,
             min_amount: minAmount,
             max_amount: maxAmount

@@ -80,19 +80,6 @@
                                 </div>
                             </div>
 
-                            @php
-
-                                if ($billing_address = $customer->billing_address ?? '')
-                                {
-                                       $address = explode('+', $billing_address);
-
-                                       $street = $address[0];
-                                       $city = $address[1];
-                                       $district = $address[2];
-                                       $division = strtolower($address[3]);
-                                }
-
-                            @endphp
 
                             <div class="tab-pane" id="address">
                                <p>The following addresses will be used on the checkout page by default.</p>
@@ -104,11 +91,11 @@
                                     <form action="{{ route('update-address') }}" method="POST">
                                         @csrf
                                         @method('PATCH')
-                                    <div class="col-12 mb-20">
+                                    <div class="col-12 mb-5 pb-5">
                                         <label for="division">Division <span>*</span></label>
-                                        <select class="select_option" name="division" id="division">
+                                        <select class="select_option" name="state" id="division">
 
-                                            <option value="{{ $division ?? '' }}">{{ $division ?? '' }}</option>
+                                            <option value="{{ $customer->state ?? '' }}">{{ ucfirst($customer->state) ?? '' }}</option>
 
                                             <option value="dhaka">Dhaka</option>
                                             <option value="chittagong">Chittagong</option>
@@ -121,19 +108,24 @@
                                         </select>
                                     </div>
 
-                                    <div class="col-12 mb-20">
+                                    <div class="col-12 mb-5">
                                         <label>District <span>*</span></label>
-                                        <input type="text" name="district" value="{{ $district ?? '' }}">
+                                        <input type="text" name="district" value="{{ $customer->district ?? '' }}">
                                     </div>
 
-                                    <div class="col-12 mb-20">
+                                    <div class="col-12 mb-5">
                                         <label>Town / City <span>*</span></label>
-                                        <input type="text" name="city" value="{{ $city ?? '' }}">
+                                        <input type="text" name="city" value="{{ $customer->city ?? '' }}">
                                     </div>
 
-                                    <div class="col-12 mb-20">
+                                        <div class="col-12 mb-5">
+                                            <label>Postal Code <span>*</span></label>
+                                            <input type="text" name="postal_code" value="{{ $customer->postal_code ?? '' }}">
+                                        </div>
+
+                                    <div class="col-12 mb-5">
                                         <label>Street address  <span>*</span></label>
-                                        <input name="street" placeholder="House number and street name" type="text" value="{{ $street ?? '' }}">
+                                        <input name="address" placeholder="House number and street name" type="text" value="{{ $customer->address ?? '' }}">
                                     </div>
 
                                     <button class="customButton py-2 px-6" style="border-radius: 5px" type="submit">Save</button>
@@ -177,7 +169,7 @@
                                                 </span>
                                                 <br>
                                                 <span class="custom_checkbox">
-                                                    <input {{ $customer->receive_offer ? 'checked' : '' }} type="checkbox" value="1" name="newsletter">
+                                                    <input {{ $customer->newsletter ? 'checked' : '' }} type="checkbox" value="1" name="newsletter">
                                                     <label>Sign up for our newsletter<br><em>You may unsubscribe at any moment. For that purpose, please find our contact info in the legal notice.</em></label>
                                                 </span>
                                                 <div class="save_button primary_btn default_button">

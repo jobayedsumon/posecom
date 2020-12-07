@@ -22,7 +22,12 @@ Route::get('/generate-sitemap', function () {
 
 });
 
-
+Route::get('/make-product-slug', function () {
+   foreach (\App\Product::all() as $product) {
+       $product->update(['slug' => \Illuminate\Support\Str::slug($product->name)]);
+   }
+   echo 'Slug successfully made!';
+});
 
 Route::post('/set-shipping-cost', function () {
     session()->put('shipping_cost', request()->get('shipping_cost'));
@@ -48,9 +53,9 @@ Route::get('/compare/remove', function () {
  */
 
 Route::get('/', 'FrontendController@index')->name('home');
-Route::get('/shop/{shopId}', 'FrontendController@shop')->name('shop');
-Route::get('/shop/{shopId}/subshop/{subId}', 'FrontendController@subshop')->name('subshop');
-Route::get('/shop/{shopId}/product/{productId}', 'FrontendController@product_details')->name('product-details');
+Route::get('/shop/{slug}', 'FrontendController@shop')->name('shop');
+//Route::get('/shop/{shopId}/subshop/{subId}', 'FrontendController@subshop')->name('subshop');
+Route::get('/shop/{shopSlug}/product/{productSlug}', 'FrontendController@product_details')->name('product-details');
 Route::get('/wishlist', 'FrontendController@wishlist')->name('wishlist');
 Route::get('/compare', 'FrontendController@compare')->name('compare');
 Route::get('/cart', 'FrontendController@cart')->name('cart');
