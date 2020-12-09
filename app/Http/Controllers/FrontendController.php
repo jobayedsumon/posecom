@@ -31,7 +31,7 @@ class FrontendController extends Controller
         $featuredCategories = Category::whereIn('id', $featuredCatIds)->get();
 
 
-//        $sliders = Slider::latest()->get();
+        $sliders = Slider::latest()->get();
         $categories = Category::where('is_active', 1)->get();
 
         $newProducts = Product::whereDate('created_at', Carbon::now()->subDays(7))->get();
@@ -47,7 +47,7 @@ class FrontendController extends Controller
 
         return view('frontend.index', compact(
             'categories', 'featuredCategories', 'featuredProdIds',
-            'newProducts'
+            'newProducts', 'sliders'
         ));
     }
 

@@ -29,6 +29,10 @@ Route::get('/make-product-slug', function () {
    echo 'Slug successfully made!';
 });
 
+Route::get('/cart-weight', function () {
+   echo session()->get('cart_weight');
+});
+
 Route::post('/set-shipping-cost', function () {
     session()->put('shipping_cost', request()->get('shipping_cost'));
 });

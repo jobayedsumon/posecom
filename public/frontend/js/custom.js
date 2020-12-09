@@ -275,30 +275,27 @@ $('input[name="location"]').on('change', function () {
     switch (value) {
         case 'inside_dhaka':
 
-            if (cart_items_quantity <= 1) {
-                shipping_cost = 80;
-            } else if (cart_items_quantity >= 2 && cart_items_quantity <= 5) {
-                shipping_cost = 150
-            } else if (cart_items_quantity >= 6 && cart_items_quantity <= 10) {
-                shipping_cost = 250
-            } else {
-                remaining_items_quantity = Math.ceil((cart_items_quantity - 10) / 5);
-                shipping_cost = 250 + remaining_items_quantity * 50;
+            shipping_cost = 80;
+            loop = cart_weight;
+
+            while (loop > 1000) {
+                shipping_cost += 20
+                loop -= 1000;
             }
 
             $('#shippingCost').text('BDT ' + shipping_cost);
+
+
             break;
 
         case 'outside_dhaka':
-            if (cart_items_quantity <= 1) {
-                shipping_cost = 160;
-            } else if (cart_items_quantity >= 2 && cart_items_quantity <= 5) {
-                shipping_cost = 250
-            } else if (cart_items_quantity >= 6 && cart_items_quantity <= 10) {
-                shipping_cost = 400
-            } else {
-                remaining_items_quantity = Math.ceil((cart_items_quantity - 10) / 5);
-                shipping_cost = 400 + remaining_items_quantity * 100;
+
+            shipping_cost = 150;
+            loop = cart_weight;
+
+            while (loop > 1000) {
+                shipping_cost += 20
+                loop -= 1000;
             }
 
             $('#shippingCost').text('BDT ' + shipping_cost);
@@ -320,6 +317,13 @@ $('input[name="location"]').on('change', function () {
         }
     });
 
+});
+
+$('input[name="size"]').click(function () {
+    let additional_price = $(this).data('add-price');
+    let product_price = $('#productPrice').val();
+    let new_price = parseInt(product_price) + parseInt(additional_price);
+    $('#updatedPrice').text('BDT '+new_price);
 });
 
 

@@ -28,15 +28,7 @@
 
     @php
 
-        if ($billing_address = auth('customer')->user() ? auth('customer')->user()->billing_address : '')
-        {
-               $address = explode('+', $billing_address);
-
-               $street = $address[0];
-               $city = $address[1];
-               $district = $address[2];
-               $division = strtolower($address[3]);
-        }
+        $customer = auth('customer')->user();
 
     @endphp
 
@@ -55,12 +47,12 @@
                             <div class="row">
                                 <div class="col-12 mb-20">
                                     <label>Name <span>*</span></label>
-                                    <input required type="text" name="name" value="{{ auth('customer')->user() ? auth('customer')->user()->name : '' }}">
+                                    <input required type="text" name="name" value="{{ $customer ? $customer->name : '' }}">
                                 </div>
                                 <div class="col-12 mb-20">
                                     <label for="division">Division <span>*</span></label>
-                                    <select required class="select_option" name="division" id="division">
-                                        <option value="{{ $division ?? '' }}">{{ $division ?? '' }}</option>
+                                    <select required class="select_option" name="state" id="division">
+                                        <option value="{{ $customer->state ?? '' }}">{{ ucfirst($customer->state) ?? '' }}</option>
                                         <option value="dhaka">Dhaka</option>
                                         <option value="chittagong">Chittagong</option>
                                         <option value="barisal">Barisal</option>
@@ -74,27 +66,32 @@
 
                                 <div class="col-12 mb-20">
                                     <label>District <span>*</span></label>
-                                    <input required type="text" name="district" value="{{ $district ?? '' }}">
+                                    <input required type="text" name="district" value="{{ $customer->district ?? '' }}">
                                 </div>
 
                                 <div class="col-12 mb-20">
                                     <label>Town / City <span>*</span></label>
-                                    <input required type="text" name="city" value="{{ $city ?? '' }}">
+                                    <input required type="text" name="city" value="{{ $customer->city ?? '' }}">
+                                </div>
+
+                                <div class="col-12 mb-5">
+                                    <label>Postal Code <span>*</span></label>
+                                    <input type="text" name="postal_code" value="{{ $customer->postal_code ?? '' }}">
                                 </div>
 
                                 <div class="col-12 mb-20">
                                     <label>Street address  <span>*</span></label>
-                                    <input required name="street" placeholder="House number and street name" value="{{ $street ?? '' }}" type="text">
+                                    <input required name="address" placeholder="House number and street name" value="{{ $customer->address ?? '' }}" type="text">
                                 </div>
 
                                 <div class="col-lg-6 mb-20">
                                     <label>Phone<span>*</span></label>
-                                    <input required name="phone_number" type="text" value="{{ auth('customer')->user() ? auth('customer')->user()->phone_number : '' }}">
+                                    <input required name="phone_number" type="text" value="{{ $customer ? $customer->phone_number : '' }}">
 
                                 </div>
                                  <div class="col-lg-6 mb-20">
                                     <label> Email Address   <span>*</span></label>
-                                      <input required name="email" type="email" value="{{ auth('customer')->user() ? auth('customer')->user()->email : '' }}">
+                                      <input required name="email" type="email" value="{{ $customer ? $customer->email : '' }}">
 
                                 </div>
 
@@ -108,13 +105,13 @@
 
                                            <div class="col-12 mb-20">
                                                <label>Name <span>*</span></label>
-                                               <input type="text" name="shipping_name" value="{{ auth('customer')->user() ? auth('customer')->user()->name : '' }}">
+                                               <input type="text" name="shipping_name" value="{{ $customer ? $customer->name : '' }}">
                                            </div>
 
                                            <div class="col-12 mb-20">
                                                <label for="division">Division <span>*</span></label>
-                                               <select class="select_option" name="shipping_division" id="division">
-                                                   <option value="{{ $division ?? '' }}">{{ $division ?? '' }}</option>
+                                               <select class="select_option" name="shipping_state" id="division">
+                                                   <option value="{{ $customer->state ?? '' }}">{{ $customer->state ?? '' }}</option>
                                                    <option value="dhaka">Dhaka</option>
                                                    <option value="chittagong">Chittagong</option>
                                                    <option value="barisal">Barisal</option>
@@ -127,28 +124,39 @@
                                            </div>
 
                                            <div class="col-12 mb-20">
-                                               <label>District <span>*</span></label>
-                                               <input type="text" name="shipping_district" value="{{ $district ?? '' }}">
+                                               <label>District <span>*</span>
+                                               <input type="text" name="shipping_district" value="{{ $customer->district ?? '' }}">
+                                               </label>
                                            </div>
 
                                            <div class="col-12 mb-20">
-                                               <label>Town / City <span>*</span></label>
-                                               <input type="text" name="shipping_city" value="{{ $city ?? '' }}">
+                                               <label>Town / City <span>*</span>
+                                               <input type="text" name="shipping_city" value="{{ $customer->city ?? '' }}">
+                                               </label>
                                            </div>
 
                                            <div class="col-12 mb-20">
-                                               <label>Street address  <span>*</span></label>
-                                               <input name="shipping_street" placeholder="House number and street name" value="{{ $street ?? '' }}" type="text">
+                                               <label>Postal Code <span>*</span>
+                                                   <input type="text" name="shipping_postal_code" value="{{ $customer->postal_code ?? '' }}">
+                                               </label>
+                                           </div>
+
+                                           <div class="col-12 mb-20">
+                                               <label>Street address  <span>*</span>
+                                               <input name="shipping_address" placeholder="House number and street name" value="{{ $customer->address ?? '' }}" type="text">
+                                               </label>
                                            </div>
 
                                            <div class="col-lg-6 mb-20">
-                                               <label>Phone<span>*</span></label>
-                                               <input name="shipping_phone_number" type="text" value="{{ auth('customer')->user() ? auth('customer')->user()->phone_number : '' }}">
+                                               <label>Phone<span>*</span>
+                                               <input name="shipping_phone_number" type="text" value="{{ $customer ? $customer->phone_number : '' }}">
+                                               </label>
 
                                            </div>
                                            <div class="col-lg-6 mb-20">
-                                               <label> Email Address   <span>*</span></label>
-                                               <input name="shipping_email" type="email" value="{{ auth('customer')->user() ? auth('customer')->user()->email : '' }}">
+                                               <label> Email Address   <span>*</span>
+                                               <input name="shipping_email" type="email" value="{{ $customer ? $customer->email : '' }}">
+                                               </label>
 
                                            </div>
 
@@ -157,8 +165,9 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="order-notes">
-                                         <label for="order_note">Order Notes</label>
+                                         <label for="order_note">Order Notes
                                         <textarea id="order_note" name="notes" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
+                                         </label>
                                     </div>
                                 </div>
                             </div>
@@ -220,18 +229,19 @@
                                     </tfoot>
                                 </table>
                             </div>
+
                         <input id="agree" type="checkbox"> Read and agree to our <a
-                            class="text-pink-500 hover:text-pink-600" href="/terms-conditions">Terms & Conditions</a>, <a
-                            class="text-pink-500 hover:text-pink-600" href="/privacy-policy">Privacy Policy</a> and <a
-                            class="text-pink-500 hover:text-pink-600" href="/returns-exchange">Return & Exchange Policy</a>
+                            class="text-golden" href="/terms-conditions">Terms & Conditions</a>, <a
+                            class="text-golden" href="/privacy-policy">Privacy Policy</a> and <a
+                            class="text-golden" href="/returns-exchange">Return & Exchange Policy</a>
                         <div class="payment_method">
 
                                 <div class="order_button m-2">
-                                    <button id="payNowBtn" name="payment_method" value="ssl" type="submit">Pay Now</button>
+                                    <button class="hover:text-black" id="payNowBtn" name="payment_method" value="ssl" type="submit">Pay Now</button>
                                 </div>
 
                                 <div class="order_button m-2">
-                                    <button id="codBtn" name="payment_method" value="cod" type="submit">Cash on Delivery</button>
+                                    <button class="hover:text-black" id="codBtn" name="payment_method" value="cod" type="submit">Cash on Delivery</button>
                                 </div>
 
 

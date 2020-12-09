@@ -62,12 +62,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-7 col-md-7">
+                <div class="col-lg-7 col-md-7" id="app">
                     <div class="product_d_right">
-                       <form action="#" id="app">
+                       <form action="#" >
                             <div class="productd_title_nav">
                                 <h1><a href="#">{{ $product->name }}</a></h1>
                                 <input type="hidden" id="productId" value="{{ $product->id }}">
+                                <input type="hidden" id="productPrice" value="{{ $product->price }}">
                             </div>
 
                            <div class=" product_ratting">
@@ -80,9 +81,9 @@
                            </div>
 
 
-
                            <div class="price_box">
-                               <span class="current_price">BDT {{ $product->promotion_price ?? $product->price }}</span>
+                               <span class="current_price" id="updatedPrice">BDT {{ $product->promotion_price ?? $product->price }}</span>
+
                                @if($product->promotion_price)
                                    <span class="old_price">BDT {{ $product->price }}</span>
                                @endif
@@ -95,20 +96,21 @@
                             <div class="product_variant color">
 
                                 <h3>Available Options</h3>
+                                <br>
 
 
                                 @forelse($product_variant as $name => $variant)
 
-                                    <div class="size">
                                         <label>{{ $name }}: </label>
-                                        <ul class="">
+                                        <div class="size">
                                             @forelse($variant as $v)
                                                 <div class="form-check-inline">
+
                                                     <label class="form-check-label flex flex-col-reverse items-center">
-                                                        <input type="radio" class="form-check-input mt-1 "
+                                                        <a>{{ ucfirst($v->pivot->item_code) }}</a>
+                                                        <input type="radio" class="form-check-input mt-1 variant"
                                                                data-item-code="{{ $v->pivot->item_code }}" name="{{ $name }}" value="{{ $v->pivot->id }}"
                                                                data-add-price="{{ $v->pivot->additional_price }}" data-quantity="{{ $v->pivot->qty }}">
-                                                        <li class=""><a>{{ ucfirst($v->pivot->item_code) }}</a></li>
 
                                                     </label>
                                                 </div>
@@ -116,8 +118,9 @@
                                             @endforelse
 
 
-                                        </ul>
-                                    </div>
+                                        </div>
+
+                                    <br>
 
                                 @empty
                                 @endforelse

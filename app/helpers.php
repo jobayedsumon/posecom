@@ -90,4 +90,11 @@ function brandImage($image)
     return $parentUrl . '/images/brand/' . $image;
 }
 
+function sliderImage($image)
+{
+    $parentUrl = env('PARENT_URL');
+
+    return $parentUrl . '/images/slider/' . $image;
+}
+
 ?>

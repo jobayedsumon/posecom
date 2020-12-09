@@ -4874,7 +4874,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   transition: 0.3s;
 }
 .widget_list.widget_filter form button:hover {
-  background: #DD316D;
+  background: #ffd700;
 }
 
 .filter_button {
@@ -6646,7 +6646,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   border-radius: 3px;
 }
 .cart_submit button:hover {
-  background: #DD316D;
+  background: #ffd700;
 }
 
 .coupon_inner {
@@ -6673,7 +6673,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   border-radius: 3px;
 }
 .coupon_inner button:hover {
-  background: #DD316D;
+  background: #ffd700;
 }
 .coupon_inner input {
   border: 1px solid #ededed;
@@ -6775,7 +6775,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   margin-bottom: 0;
 }
 .checkout_btn a:hover {
-  background: #DD316D;
+  background: #ffd700;
   color: #ffffff;
 }
 
@@ -7012,7 +7012,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   }
 }
 .checkout_form label.righ_0:hover {
-  background: #DD316D;
+  color: #000;
 }
 
 .checkout_form input[type="checkbox"] {
@@ -7043,7 +7043,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   }
 }
 .order_button button:hover {
-  background: #DD316D;
+  background: #ffd700;
 }
 
 @media only screen and (max-width: 767px) {
@@ -7219,7 +7219,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   margin-right: 10px;
 }
 .contact_message ul li a:hover {
-  color: #DD316D;
+  color: #ffd700;
 }
 .contact_message label {
   line-height: 18px;
@@ -7264,7 +7264,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   border-radius: 4px;
 }
 .contact_message button:hover {
-  background: #DD316D;
+  background: #ffd700;
 }
 @media only screen and (max-width: 767px) {
   .contact_message.content {
@@ -7345,7 +7345,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   border-radius: 20px;
 }
 .account_form button:hover {
-  background: #DD316D;
+  background: #ffd700;
 }
 
 .login_submit label input[type="checkbox"] {

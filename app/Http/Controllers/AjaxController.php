@@ -60,6 +60,7 @@ class AjaxController extends Controller
     {
         $cart = session()->get('cart');
         $cart_sub_total = session()->get('cart_sub_total') ??  0;
+        $cart_weight = session()->get('cart_weight') ??  0;
 
         $cart[] = array(
             'cart_id' => uniqid(),
@@ -77,6 +78,7 @@ class AjaxController extends Controller
 
         foreach ($product_variation as $variation) {
             $product_price += $variation->additional_price;
+            $cart_weight += intval($variation->item_code);
         }
 
 
@@ -90,9 +92,11 @@ class AjaxController extends Controller
 
         foreach ($cart as $data) {
             $cart_items_quantity += $data['count'];
+
         }
 
         session()->put('cart_items_quantity', $cart_items_quantity);
+        session()->put('cart_weight', $cart_weight);
         session()->put('cart', $cart);
 
 
@@ -107,6 +111,7 @@ class AjaxController extends Controller
 
         $cart = session()->pull('cart');
         $cart_sub_total = 0;
+        $cart_weight = session()->pull('cart_weight') ?? 0;
         $newCart = [];
 
         if ($cart) {
@@ -127,6 +132,13 @@ class AjaxController extends Controller
 
                 $product_price = $product->promotion_price ?? $product->price;
 
+                $product_variation = DB::table('product_variants')->where('id', $request->size_id[$i])->get();
+
+                foreach ($product_variation as $variation) {
+                    $product_price += $variation->additional_price;
+                    $cart_weight += intval($variation->item_code);
+                }
+
                 $product_price *= $data['count'];
 
                 $cart_sub_total += $product_price;
@@ -146,6 +158,7 @@ class AjaxController extends Controller
         }
 
         session()->put('cart_items_quantity', $cart_items_quantity);
+        session()->put('cart_weight', $cart_weight);
 
 
 

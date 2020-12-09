@@ -6,6 +6,8 @@ use App\Customer;
 use App\Order;
 use App\OrderDetails;
 use App\Product;
+use App\Product_Warehouse;
+use App\ProductVariant;
 use Illuminate\Http\Request;
 use App\Library\SslCommerz\SslCommerzNotification;
 use Illuminate\Support\Facades\DB;
@@ -60,31 +62,24 @@ class SslCommerzPaymentController extends Controller
             return view('frontend.payment');
         }
 
-        $billing_address = $request->street . '+';
-        $billing_address .= $request->city . '+';
-        $billing_address .= $request->district . '+';
-        $billing_address .= ucfirst($request->division);
-
         if ($request->shipping_address) {
             $request->validate([
-               'shipping_street' => 'required',
+               'shipping_address' => 'required',
                'shipping_city' => 'required',
                'shipping_district' => 'required',
-               'shipping_division' => 'required',
+               'shipping_state' => 'required',
+               'shipping_postal_code' => 'required',
             ]);
-            $shipping_address = $request->shipping_street . '+';
-            $shipping_address .= $request->shipping_city . '+';
-            $shipping_address .= $request->shipping_district . '+';
-            $shipping_address .= ucfirst($request->shipping_division);
-        } else {
-            $shipping_address = $billing_address;
         }
 
         $customer->update([
             'name' => $request->name,
             'phone_number' => $request->phone_number,
-            'billing_address' => $billing_address,
-            'shipping_address' => $shipping_address,
+            'address' => $request->address,
+            'city' => $request->city,
+            'district' => $request->district,
+            'state' => $request->state,
+            'postal_code' => $request->postal_code,
 
         ]);
 
@@ -104,30 +99,31 @@ class SslCommerzPaymentController extends Controller
         # CUSTOMER INFORMATION
         $post_data['cus_name'] =  $request->name ?? "";
         $post_data['cus_email'] =  $request->email ?? "";
-        $post_data['cus_add1'] = $request->street ?? "";
-        $post_data['cus_add2'] = $request->street ?? "";
+        $post_data['cus_add1'] = $request->address ?? "";
+        $post_data['cus_add2'] = $request->address ?? "";
         $post_data['cus_city'] =  $request->city ?? "";
-        $post_data['cus_state'] = $request->city ?? "";
-        $post_data['cus_postcode'] = $request->post ?? "";
+        $post_data['cus_state'] = $request->state ?? "";
+        $post_data['cus_postcode'] = $request->postal_code ?? "";
         $post_data['cus_country'] = "Bangladesh";
         $post_data['cus_phone'] =  $request->phone_number ?? "";;
         $post_data['cus_fax'] = "";
 
         # SHIPMENT INFORMATION
         $post_data['ship_name'] =  $request->shipping_name ?? $request->name;
-        $post_data['ship_add1'] =  $request->shipping_street ?? $request->street;
-        $post_data['ship_add2'] = $request->shipping_street ?? $request->street;
+        $post_data['ship_add1'] =  $request->shipping_address ?? $request->address;
+        $post_data['ship_add2'] = $request->shipping_address ?? $request->address;
         $post_data['ship_city'] = $request->shipping_city ?? $request->city;
-        $post_data['ship_state'] = $request->shipping_city ?? $request->city;
-        $post_data['ship_postcode'] = $request->shipping_post ?? $request->post;
+        $post_data['ship_district'] = $request->shipping_district ?? $request->district;
+        $post_data['ship_state'] = $request->shipping_state ?? $request->state;
+        $post_data['ship_postcode'] = $request->shipping_postal_code ?? $request->postal_code;
         $post_data['ship_phone'] = $request->shipping_phone_number ?? $request->phone_number;
-        $post_data['ship_email'] = $request->shipping_email?? $request->email;
+        $post_data['ship_email'] = $request->shipping_email ?? $request->email;
         $post_data['ship_country'] = "Bangladesh";
 
         $post_data['shipping_method'] = "NO";
-        $post_data['product_name'] = "AmarShop";
-        $post_data['product_category'] = "AmarShop";
-        $post_data['product_profile'] = "AmarShop";
+        $post_data['product_name'] = "Mridha Enterprise";
+        $post_data['product_category'] = "Mridha Enterprise";
+        $post_data['product_profile'] = "Mridha Enterprise";
 
         # OPTIONAL PARAMETERS
         $post_data['value_a'] = "ref001";
@@ -144,15 +140,23 @@ class SslCommerzPaymentController extends Controller
                 'phone' => $post_data['ship_phone'],
                 'amount' => $post_data['total_amount'],
                 'status' => 'Pending',
-                'address' => $shipping_address,
+                'address' => $post_data['ship_add1'],
+                'city' => $post_data['ship_city'],
+                'district' => $post_data['ship_district'],
+                'state' => $post_data['ship_state'],
+                'postal_code' => $post_data['ship_postcode'],
+                'country' => 'Bangladesh',
                 'transaction_id' => $post_data['tran_id'],
                 'currency' => $post_data['currency'],
                 'customer_id' => $customer->id,
+                'origin' => 'Website',
                 'notes' => $notes,
                 'created_at' => now(),
             ]);
 
         $order = Order::where('transaction_id', $post_data['tran_id'])->first();
+
+        $warehouse = DB::table('warehouses')->where('name', '=', 'Shop')->first();
 
         for ($i = 0; $i < $count; $i++) {
             OrderDetails::create([
@@ -165,9 +169,36 @@ class SslCommerzPaymentController extends Controller
 
             $product = Product::find($cart[$i]['product_id']);
 
-            $product->quantity -= $cart[$i]['count'];
+            $warehouse_data = DB::table('product_warehouse')->where([
+                ['product_id', $product->id],
+                ['warehouse_id', $warehouse->id ],
+            ]);
 
-            $product->save();
+
+            $product_quantity = $product->qty - $cart[$i]['count'];
+            $warehouse_count = $warehouse_data->first()->qty - $cart[$i]['count'];
+
+            $warehouse_data->update([
+                'qty' => $warehouse_count
+            ]);
+
+            $product->update([
+                'qty' => $product_quantity
+            ]);
+
+
+
+            $product_variant_data = DB::table('product_variants')->select('id', 'variant_id', 'qty')
+                ->where('product_id', $product->id)->where('id', $cart[$i]['size_id']);
+
+            //deduct product variant quantity if exist
+            if($product_variant_data->first()) {
+                $variant_count = $product_variant_data->first()->qty - $cart[$i]['count'];
+                $product_variant_data->update([
+                    'qty' => $variant_count
+                ]);
+            }
+
         }
 
         switch ($request->payment_method)

@@ -7,11 +7,11 @@
 @endsection
 
 
-{{--@section('slider')--}}
+@section('slider')
 
-{{--    @include('frontend.layout.slider')--}}
+    @include('frontend.layout.slider')
 
-{{--@endsection--}}
+@endsection
 
 @section('banner')
 

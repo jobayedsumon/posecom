@@ -73,6 +73,7 @@
                                     <td class="product_name"><a href="{{ route('product-details', [$product->category->slug, $product->slug]) }}">{{ $product->name }}</a></td>
                                     <td class="product-price">{{ $color ? $color->item_code : '' }}</td>
                                     <td class="product-price">{{ $size ? $size->item_code : '' }}</td>
+                                    <input type="hidden" name="size_id[]" value="{{ $size->id }}">
 
                                     <td class="product-price">BDT {{ $cart_price = ($product->promotion_price ?? $product->price) + $color->additional_price + $size->additional_price }}</td>
                                     <td class="product_quantity"><label>Quantity</label> <input min="1" max="10000" name="count[]" value="{{ $data['count'] }}" type="number"></td>
@@ -184,6 +185,8 @@
 
 <script>
     let cart_items_quantity = @json(session()->get('cart_items_quantity'));
+
+    let cart_weight = @json(session()->get('cart_weight'));
 
     function checkLocation()
     {
