@@ -12,6 +12,12 @@ body, .header_middle, .sticky-header .sticky{
 
 }
 
+.priceSlider {
+    width: 100%;
+    text-align: center;
+    border-radius: 10px;
+}
+
 .page_content h1 {
     font-size: 24px;
     font-weight: bold;

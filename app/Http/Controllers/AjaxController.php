@@ -244,7 +244,8 @@ class AjaxController extends Controller
 
     public function filter_product(Request $request)
     {
-        $brand = $request->brand_id;
+        $category_id = $request->category_id;
+        $brand_id = $request->brand_id;
 //        $size = $request->size_id;
 
         $minPrice = (int)$request->min_amount;
@@ -253,8 +254,12 @@ class AjaxController extends Controller
         $data = Product::whereBetween('price', [$minPrice, $maxPrice]);
 
 
-        if ($brand != -1) {
-            $data->where('brand_id', $brand);
+        if ($category_id != -1) {
+            $data->where('category_id', $category_id);
+        }
+
+        if ($brand_id != -1) {
+            $data->where('brand_id', $brand_id);
         }
 
 //        if ($size != -1) {

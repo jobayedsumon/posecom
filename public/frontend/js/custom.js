@@ -144,9 +144,11 @@ $('#filter').on('click', function (e) {
     minAmount = parseInt(amount[0]);
     maxAmount = parseInt(amount[1]);
 
+    let category = parseInt($('.category:selected').val());
     let brand = parseInt($('.brand:selected').val());
     let size = parseInt($('.size:selected').val());
 
+    if (isNaN(category)) category = -1;
     if (isNaN(brand)) brand = -1;
     if (isNaN(size)) size = -1;
 
@@ -157,6 +159,7 @@ $('#filter').on('click', function (e) {
         url: '/filter-product',
         data: {
             _token: CSRF_TOKEN,
+            category_id: category,
             brand_id: brand,
             size_id: size,
             min_amount: minAmount,

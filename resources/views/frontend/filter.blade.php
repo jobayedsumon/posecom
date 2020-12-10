@@ -7,7 +7,7 @@
         <div class="widget_list widget_filter">
             <h3>Select price range</h3>
                 <div id="slider-range"></div>
-                <input type="text" name="price" id="amount" />
+                <input class="priceSlider" type="text" name="price" id="amount" />
         </div>
         <div class="widget_list widget_color">
             <h3>Select Brand</h3>
@@ -26,6 +26,24 @@
 
             </select>
         </div>
+
+            <div class="widget_list widget_color">
+                <h3>Select Category</h3>
+                <select class="form-control p-2" id="colorSelect">
+                    <option value="-1">Select Category</option>
+                    @php $categories = \App\Category::all(); @endphp
+
+
+
+                    @forelse($categories as $category)
+                        <option class="category" value="{{ $category->id }}">{{ $category->name }}</option>
+
+                    @empty
+
+                    @endforelse
+
+                </select>
+            </div>
 
 {{--        <div class="widget_list widget_color">--}}
 {{--            <h3>Select SIze</h3>--}}
