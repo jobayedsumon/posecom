@@ -13,6 +13,13 @@
 
 @section('content')
 
+    <style>
+        .action_links ul li i, .modal_social ul li i {
+            position: relative;
+            top: 30%;
+        }
+    </style>
+
     <!--breadcrumbs area start-->
     <div class="breadcrumbs_area">
         <div class="container">
@@ -155,7 +162,9 @@
                             </div>
                             <div class="product_meta">
                                 <div>Category: <a href="{{ route('shop', $category->slug) }}">{{ $category->name }}</a></div>
+                                @if($product->brand)
                                 <div>Brand: <a href="{{ route('brand-search', $product->brand->title) }}">{{ $product->brand->title }}</a></div>
+                                @endif
                             </div>
 {{--                           <div class="product_meta">--}}
 {{--                               <span>Tags:--}}
@@ -347,7 +356,7 @@
                     <article class=" single_product mr-3">
                         <figure class="h-full flex flex-column justify-start">
                             <div class="product_thumb">
-                                <a class="primary_img" href="{{ route('product-details', [$related_product->category->id, $related_product->id]) }}">
+                                <a class="primary_img" href="{{ route('product-details', [$related_product->category->slug, $related_product->slug]) }}">
                                     <img src="{{ productImage($related_product->image) }}" alt=""></a>
 
                                 {{--                                                    <div class="label_product">--}}
@@ -359,7 +368,7 @@
                                                                 title="Add to Wishlist"><i class="icon-heart icons"></i></a></li>
                                         <li class="compare">
                                             <a href="javascript:void(0)" class="compareButton" data-id="{{ $related_product->id }}" title="Add to Compare">
-                                                <i class="icon-refresh icons"></i></a></li>
+                                                <i class="icon-refresh icons" ></i></a></li>
                                         <li class="quick_button">
                                             <a data-toggle="modal" data-target="#view-modal"
                                                class="quickButton"
@@ -373,7 +382,7 @@
                                 </div>
                             </div>
                             <figcaption class="product_content">
-                                <h4 class="product_name"><a href="{{ route('product-details', [$related_product->category->id, $related_product->id]) }}">
+                                <h4 class="product_name"><a href="{{ route('product-details', [$related_product->category->slug, $related_product->slug]) }}">
                                         {{ $related_product->name }}</a></h4>
                                 <div class="price_box">
                                     <span class="current_price">BDT {{ $related_product->promotion_price ?? $related_product->price }}</span>

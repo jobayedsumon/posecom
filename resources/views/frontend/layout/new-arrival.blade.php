@@ -17,7 +17,7 @@
                 <article class="single_product mr-3">
                     <figure class="h-full flex flex-column justify-start">
                         <div class="product_thumb">
-                            <a class="primary_img" href="{{ route('product-details', [$newProduct->category->id, $newProduct->id]) }}">
+                            <a class="primary_img" href="{{ route('product-details', [$newProduct->category->slug, $newProduct->slug]) }}">
                                 <img src="{{ productImage($newProduct->image) }}" alt=""></a>
 
 {{--                            <div class="label_product">--}}
@@ -42,7 +42,7 @@
                             </div>
                         </div>
                         <figcaption class="product_content">
-                            <h4 class="product_name"><a href="{{ route('product-details', [$newProduct->category->id, $newProduct->id]) }}">
+                            <h4 class="product_name"><a href="{{ route('product-details', [$newProduct->category->slug, $newProduct->slug]) }}">
                                     {{ $newProduct->name }}</a></h4>
                             <div class="price_box">
                                 <span class="current_price">BDT {{ $newProduct->promotion_price ?? $newProduct->price }}</span>

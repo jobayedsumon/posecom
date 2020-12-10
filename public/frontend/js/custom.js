@@ -66,13 +66,13 @@ $('.compareButton').click(function (e) {
 
 $('#addToCart').click(function (e) {
 
-    // if (!$("input[name='color']").is(':checked')) {
-    //     return alert('Please select color');
-    // }
-    //
-    // if (!$("input[name='size']").is(':checked')) {
-    //     return alert('Please select size');
-    // }
+    if ($("input[name='color']").length != 0 && !$("input[name='color']").is(':checked')) {
+        return alert('Please select color');
+    }
+
+    if ($("input[name='size']").length != 0 && !$("input[name='size']").is(':checked')) {
+        return alert('Please select size');
+    }
 
     let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 

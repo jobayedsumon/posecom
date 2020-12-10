@@ -73,9 +73,9 @@
                                     <td class="product_name"><a href="{{ route('product-details', [$product->category->slug, $product->slug]) }}">{{ $product->name }}</a></td>
                                     <td class="product-price">{{ $color ? $color->item_code : '' }}</td>
                                     <td class="product-price">{{ $size ? $size->item_code : '' }}</td>
-                                    <input type="hidden" name="size_id[]" value="{{ $size->id }}">
+                                    <input type="hidden" name="size_id[]" value="{{ $size ? $size->id : '' }}">
 
-                                    <td class="product-price">BDT {{ $cart_price = ($product->promotion_price ?? $product->price) + $color->additional_price + $size->additional_price }}</td>
+                                    <td class="product-price">BDT {{ $cart_price = ($product->promotion_price ?? $product->price) + ($color ? $color->additional_price : 0) + ($size ? $size->additional_price : 0) }}</td>
                                     <td class="product_quantity"><label>Quantity</label> <input min="1" max="10000" name="count[]" value="{{ $data['count'] }}" type="number"></td>
                                     <td class="product_total">BDT {!! $row_total = $cart_price * $data['count'] !!}</td>
 

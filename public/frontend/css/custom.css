@@ -8,7 +8,7 @@ html, body {
 }
 
 body, .header_middle, .sticky-header .sticky{
-    background: rgba(255,215,0, 0.025);
+    background: rgba(255,215,0, 0.1);
 
 }
 
@@ -149,7 +149,7 @@ footer, .header_top {
 }
 
 .social_icons li {
-    background: #ffd700;
+    background: #fff;
     height: 30px;
     width: 30px;
     border-radius: 50%;
@@ -161,8 +161,12 @@ footer, .header_top {
     top: 3px;
 }
 
-.social_icons li a:hover{
-    color: #000;
+.social_icons li:hover {
+    background: #ffd700;
+}
+
+.social_icons li a:hover {
+    color: white;
 }
 
 @media (min-width: 768px) {
@@ -173,7 +177,7 @@ footer, .header_top {
 
 
 .pagination ul li {
-    background-color: #ffd700;
+    background-color: #background: #ffd700;;
 }
 
 .pagination ul li a:hover {

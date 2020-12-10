@@ -3,9 +3,6 @@
 use Illuminate\Support\Facades\Config;
 
 
-
-
-
 function cdn($asset ){
 
 
@@ -71,6 +68,10 @@ function categoryImage($image)
 
 function productImage($image)
 {
+    if (!$image) {
+        return logo('mridha-logo.png');
+    }
+
     $parentUrl = env('PARENT_URL');
 
     return $parentUrl . '/images/product/' . $image;

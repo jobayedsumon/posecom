@@ -6,6 +6,7 @@ use App\Charts\SampleChart;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use Symfony\Component\Console\Helper\Helper;
 
 class AppServiceProvider extends ServiceProvider
 {

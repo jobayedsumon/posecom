@@ -200,8 +200,9 @@ class AjaxController extends Controller
     public function loadModal($id)
     {
         $product = Product::findOrFail($id);
+        $product_variant = $product->variant->groupBy('name');
 
-        return view('frontend.layout.modal_body',['data'=>$product]);
+        return view('frontend.layout.modal_body',['data'=>$product, 'product_variant'=>$product_variant]);
     }
 
     public function loadModalReview($id)

@@ -55,52 +55,52 @@
                                         <span class="old_price">BDT {{ $data->price }}</span>
                                     @endif
                                 </div>
-                                <div class="modal_description mb-15">
+                                <div class="modal_description mb-10">
                                     {!! $data->product_details !!}
                                 </div>
 
-{{--                                <div class="variants_selects">--}}
-{{--                                    <div class="product_variant color">--}}
-{{--                                        <h3>Available Options</h3>--}}
-{{--                                        <label>color</label>--}}
-{{--                                        <ul>--}}
-{{--                                            @forelse($data->colors as $color)--}}
-{{--                                                <div class="form-check-inline">--}}
-{{--                                                    <label class="form-check-label flex flex-col-reverse items-center">--}}
-{{--                                                        <input type="radio" class="form-check-input colorId" name="color" value="{{ $color->id }}">--}}
-{{--                                                        <li class=""><a style="background-color: {{ $color->name }}"></a></li>--}}
-{{--                                                    </label>--}}
-{{--                                                </div>--}}
-
-{{--                                            @empty--}}
-{{--                                            @endforelse--}}
-
-{{--                                        </ul>--}}
-
-{{--                                        <div class="size">--}}
-{{--                                            <label>size</label>--}}
-{{--                                            <ul class="">--}}
-{{--                                                @forelse($data->sizes as $size)--}}
-{{--                                                    <div class="form-check-inline">--}}
-{{--                                                        <label class="form-check-label flex flex-col-reverse items-center">--}}
-{{--                                                            <input type="radio" class="form-check-input sizeId" name="size" value="{{ $size->id }}" required>--}}
-{{--                                                            <li class=""><a>{{ $size->name }}</a></li>--}}
-{{--                                                        </label>--}}
-{{--                                                    </div>--}}
-{{--                                                @empty--}}
-{{--                                                @endforelse--}}
+                                <div class="variants_selects">
+                                    <div class="product_variant color">
+                                        <h3>Available Options</h3>
 
 
-{{--                                            </ul>--}}
-{{--                                        </div>--}}
+                                        @forelse($product_variant as $name => $variant)
+
+                                            <label>{{ $name }}: </label>
+                                            <div class="size">
+                                                @forelse($variant as $v)
+                                                    <div class="form-check-inline">
+
+                                                        <label class="form-check-label flex flex-col-reverse items-center">
+                                                            <a>{{ ucfirst($v->pivot->item_code) }}</a>
+                                                            <input type="radio" class="form-check-input mt-1 variant"
+                                                                   data-item-code="{{ $v->pivot->item_code }}" name="{{ $name }}" value="{{ $v->pivot->id }}"
+                                                                   data-add-price="{{ $v->pivot->additional_price }}" data-quantity="{{ $v->pivot->qty }}">
+
+                                                        </label>
+                                                    </div>
+                                                @empty
+                                                @endforelse
 
 
-{{--                                    </div>--}}
+                                            </div>
+
+
+                                        @empty
+                                        @endforelse
+
+
+                                    </div>
                                     <div class="modal_add_to_cart">
                                         <form action="">
                                             <input type="hidden" id="productId_modal" value="{{ $data->id }}" required>
                                             <input min="1" max="100" step="1" value="1" id="count_modal" type="number">
-                                            <a id="addToCartModal" class="customButton py-3 px-5">Add to Cart</a>
+
+                                            @if($data->qty > 0)
+                                                <a id="addToCartModal" class="customButton py-3 px-5">Add to Cart</a>
+                                            @else
+                                                <p class="ml-2 font-bold text-danger">Out of Stock!</p>
+                                            @endif
                                         </form>
                                     </div>
 {{--                                </div>--}}
