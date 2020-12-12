@@ -1,4 +1,5 @@
 curl -X POST https://sandbox.sslcommerz.com/gwprocess/v4/api.php
+# shellcheck disable=SC2215
 -d
 'store_id=testbox&
 store_passwd=qwerty&

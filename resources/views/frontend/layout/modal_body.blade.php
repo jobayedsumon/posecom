@@ -132,16 +132,20 @@
 
     $('#addToCartModal').click(function (e) {
 
+        if ($("input[name='color']").length != 0 && !$("input[name='color']").is(':checked')) {
+            return alert('Please select color');
+        }
+
+        if ($("input[name='size']").length != 0 && !$("input[name='size']").is(':checked')) {
+            return alert('Please select size');
+        }
+
         let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
         productId = $('#productId_modal').val();
         colorId = $("input[name='color']:checked").val();
         sizeId = $("input[name='size']:checked").val();
         count = $('#count_modal').val();
-
-        if (colorId == null || sizeId == null) {
-            return false;
-        }
 
         $.ajax({
             type: 'POST',

@@ -14,8 +14,8 @@
 
             @forelse($newProducts as $newProduct)
 
-                <article class="single_product mr-3">
-                    <figure class="h-full flex flex-column justify-start">
+                <article class="single_product m-2">
+                    <figure class="h-full flex flex-column justify-between">
                         <div class="product_thumb">
                             <a class="primary_img" href="{{ route('product-details', [$newProduct->category->slug, $newProduct->slug]) }}">
                                 <img src="{{ productImage($newProduct->image) }}" alt=""></a>

@@ -68,11 +68,12 @@ function categoryImage($image)
 
 function productImage($image)
 {
-    if (!$image) {
-        return logo('mridha-logo.png');
-    }
 
     $parentUrl = env('PARENT_URL');
+
+    if (!$image) {
+        $image = 'product-demo.jpg';
+    }
 
     return $parentUrl . '/images/product/' . $image;
 }

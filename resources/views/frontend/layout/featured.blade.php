@@ -38,8 +38,8 @@
 
                     @forelse($featuredCategory->products()->whereIn('id', $featuredProdIds)->get() as $featuredProduct)
 
-                                    <div class="product_items">
-                                        <article class=" single_product m-2">
+                                    <div class="product_items m-2">
+                                        <article class="single_product m-2">
                                             <figure class="h-full flex flex-column justify-start">
                                                 <div class="product_thumb">
                                                     <a class="primary_img" href="{{ route('product-details', [$featuredProduct->category->slug, $featuredProduct->slug]) }}">
