@@ -40,7 +40,7 @@
 
                                     <div class="product_items m-2">
                                         <article class="single_product m-2">
-                                            <figure class="h-full flex flex-column justify-start">
+                                            <figure class="h-full flex flex-column justify-between">
                                                 <div class="product_thumb">
                                                     <a class="primary_img" href="{{ route('product-details', [$featuredProduct->category->slug, $featuredProduct->slug]) }}">
                                                         <img src="{{ productImage($featuredProduct->image) }}" alt=""></a>

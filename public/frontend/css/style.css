@@ -5997,8 +5997,8 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 
 .product_review_form button {
   border: none;
-  background: #333;
-  color: #ffffff;
+  background: #ffd700;
+  color: #000;
   text-transform: uppercase;
   font-weight: 500;
   padding: 5px 15px 3px;
@@ -6011,7 +6011,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   font-size: 13px;
 }
 .product_review_form button:hover {
-  background: #ffd700;
+
   color: #ffffff;
 }
 

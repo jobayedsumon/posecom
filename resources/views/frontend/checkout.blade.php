@@ -188,7 +188,7 @@
                                     @forelse($cart ?? [] as $data)
                                         @php
                                             $product = \App\Product::findOrFail($data['product_id']);
-                                            $cart_price = $product->discount ? $product->price - round($product->price * $product->discount / 100) : $product->price
+                                            $cart_price = $product->promotion_price ?? $product->price
                                         @endphp
                                         <tr>
                                             <td> {{ $product->name }} <strong> × {{ $data['count'] }}</strong></td>
@@ -209,7 +209,7 @@
                                             @php $couponCart = session()->get('couponCart'); @endphp
                                             <tr>
                                                 <th>Discount</th>
-                                                <td><strong>BDT {{ $discount = round(($sub_total) * $couponCart['value']) / 100 }}</strong></td>
+                                                <td><strong>BDT {{ $discount = $couponCart['value'] }}</strong></td>
                                             </tr>
 
                                             @php $sub_total -= $discount @endphp

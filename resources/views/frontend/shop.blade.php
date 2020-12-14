@@ -43,7 +43,7 @@
                                 <div class="widget_list widget_filter">
                                     <h3>Select price range</h3>
                                     <div id="slider-range"></div>
-                                    <input type="text" name="price" id="amount" />
+                                    <input class="priceSlider" type="text" name="price" id="amount" />
                                 </div>
                                 <div class="widget_list widget_color">
                                     <h3>Select Brand</h3>

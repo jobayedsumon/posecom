@@ -134,7 +134,7 @@
                                         <div class="cart_subtotal">
                                             <p>Discount</p>
                                             <p class="flex">({{ $couponCart['code'] }})<a title="Remove" href="{{ route('remove-coupon') }}"><i class="fa fa-remove"></i></a></p>
-                                            <p class="cart_amount" id="">BDT {{ $discount = round($sub_total * $couponCart['value'] / 100) }}</p>
+                                            <p class="cart_amount" id="">BDT {{ $discount = $couponCart['value'] }}</p>
                                         </div>
 
 

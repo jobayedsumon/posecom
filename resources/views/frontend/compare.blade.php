@@ -37,68 +37,102 @@
         <div class="row">
             @forelse($compare as $data)
 
-                @php $product = \App\Product::findOrFail($data); @endphp
+                @php $product = \App\Product::findOrFail($data);
+                    $product_variant = $product->variant->groupBy('name');
+                @endphp
 
-            <div class="col-4">
-                <table class="table table-striped table-hover">
-                    <img src="{{ asset($product->image_primary) }}" class="m-auto" alt="" width="200px">
-                    <thead>
-                    <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">{{ $product->name }}</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>Price</td>
-                        <td>{{ $product->price }}</td>
-                    </tr>
-                    <tr>
-                        <td>Discount</td>
-                        <td>{{ $product->discount }}%</td>
-                    </tr>
-                    <tr>
-                        <td>Color</td>
-                        <td>
-                            @forelse($product->colors as $color)
-                                <span style="background-color: {{ $color ? $color->name : '' }}" class="p-3"> &nbsp;</span>
-                            @empty
-                            @endforelse
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Size</td>
-                        <td>
-                        @forelse($product->sizes as $size)
-                            {{ $size->name }} <br>
-                        @empty
-                        @endforelse
-                            </td>
 
-                    </tr>
-                    <tr>
-                        <td>Brand</td>
-                        <td>{{ $product->brand->name }}</td>
-                    </tr>
 
-                    <tr>
-                        <th>Specification</th>
-                    </tr>
-                    <tr>
-                        <td>Compositions</td>
-                        <td>{{ $product->specification ? $product->specification->compostions : '' }}</td>
-                    </tr>
-                    <tr>
-                        <td>Styles</td>
-                        <td>{{ $product->specification ? $product->specification->styles : '' }}</td>
-                    </tr>
-                    <tr>
-                        <td>Properties</td>
-                        <td>{{ $product->specification ? $product->specification->properties : '' }}</td>
-                    </tr>
+            <div class="col-4 ">
 
-                    </tbody>
-                </table>
+                <div class="flex flex-column justify-between h-100">
+                    <div>
+                        <img src="{{ productImage($product->image) }}" class="img-thumbnail" alt="">
+                    </div>
+                    <table class="table table-striped table-hover row">
+                        <thead>
+
+                        <tr>
+                            <th scope="col">Name</th>
+
+                            <th scope="col">{{ $product->name }}</th>
+                        </tr>
+
+                        <tr>
+                            <th>Price</th>
+                            <th>BDT {{ $product->price }}</th>
+                        </tr>
+                        <tr>
+                            <th>Discounted Price</th>
+                            <th>BDT {{ $product->promotion_price }}</th>
+                        </tr>
+                        <tr>
+                            <th>Variation</th>
+                            <th>
+                                @forelse($product_variant as $name => $variant)
+
+                                    <label>{{ ucfirst($name) }}: </label>
+                                    <div class="size">
+                                        @forelse($variant as $v)
+                                            <div class="form-check-inline">
+
+                                                <label class="form-check-label flex flex-col-reverse items-center">
+                                                    <a>{{ ucfirst($v->pivot->item_code) }}</a>
+
+                                                </label>
+                                            </div>
+                                        @empty
+                                        @endforelse
+
+
+                                    </div>
+
+                                    <br>
+
+                                @empty
+                                @endforelse
+                            </th>
+                        </tr>
+
+                        <tr>
+                            <th>Brand</th>
+                            <th>{{ $product->brand->name }}</th>
+                        </tr>
+                        <tr>
+                            <th>Category</th>
+                            <th>{{ $product->category->name }}</th>
+                        </tr>
+                        <tr>
+                            <th>Expiry Date</th>
+                            <th>{{ $product->expiry_date }}</th>
+                        </tr>
+                        <tr>
+                            <th>Available</th>
+                            <th>{{ $product->qty }}</th>
+                        </tr>
+
+                        {{--                    <tr>--}}
+                        {{--                        <th>Specification</th>--}}
+                        {{--                    </tr>--}}
+                        {{--                    <tr>--}}
+                        {{--                        <th>Compositions</td>--}}
+                        {{--                        <td>{{ $product->specification ? $product->specification->compostions : '' }}</td>--}}
+                        {{--                    </tr>--}}
+                        {{--                    <tr>--}}
+                        {{--                        <td>Styles</td>--}}
+                        {{--                        <td>{{ $product->specification ? $product->specification->styles : '' }}</td>--}}
+                        {{--                    </tr>--}}
+                        {{--                    <tr>--}}
+                        {{--                        <td>Properties</td>--}}
+                        {{--                        <td>{{ $product->specification ? $product->specification->properties : '' }}</td>--}}
+                        {{--                    </tr>--}}
+
+                        </thead>
+                    </table>
+                </div>
+
+
+
             </div>
 
             @empty

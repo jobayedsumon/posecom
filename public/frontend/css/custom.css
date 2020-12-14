@@ -105,6 +105,16 @@ body, .header_middle, .sticky-header .sticky{
     object-fit: contain;
 }
 
+.dealButton {
+    background-color: #777;
+    padding: 10px;
+    border-radius: 25px;
+}
+
+.dealButton:hover {
+    color: #000;
+}
+
 .product_thumb img {
     width: 100%;
     object-fit: contain;

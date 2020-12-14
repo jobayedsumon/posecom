@@ -26,11 +26,11 @@
 @endsection
 
 
-{{--@section('deals')--}}
+@section('deals')
 
-{{--    @include('frontend.layout.deals')--}}
+    @include('frontend.layout.deals')
 
-{{--@endsection--}}
+@endsection
 
 @section('product-filter')
 
@@ -44,11 +44,11 @@
 
 @endsection
 
-{{--@section('testimonial')--}}
+@section('testimonial')
 
-{{--    @include('frontend.layout.testimonial')--}}
+    @include('frontend.layout.testimonial')
 
-{{--@endsection--}}
+@endsection
 
 
 @section('modal')

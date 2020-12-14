@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Coupon;
 use App\Customer;
 use App\Order;
 use App\OrderDetails;
@@ -201,6 +202,14 @@ class SslCommerzPaymentController extends Controller
 
         }
 
+        if (session()->has('couponCart')) {
+            $couponCart = session()->get('couponCart');
+            $coupon = Coupon::where('code', $couponCart['code'])->first();
+            $coupon->used += 1;
+            $coupon->save();
+        }
+
+
         switch ($request->payment_method)
         {
             case 'cod':
@@ -215,7 +224,6 @@ class SslCommerzPaymentController extends Controller
                 $order->update([
                     'type' => 'ssl'
                 ]);
-
                 $sslc = new SslCommerzNotification();
                 # initiate(Transaction Data , false: Redirect to SSLCOMMERZ gateway/ true: Show all the Payement gateway here )
                 $payment_options = $sslc->makePayment($post_data, 'hosted');

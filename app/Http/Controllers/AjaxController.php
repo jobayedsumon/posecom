@@ -217,17 +217,35 @@ class AjaxController extends Controller
     public function apply_coupon(Request $request)
     {
         $coupon = Coupon::where('code', $request->coupon)->first();
+        $cart_sub_total = session()->get('cart_sub_total');
 
         if (!$coupon) {
             return redirect()->back()->with('message', 'Invalid Coupon');
         }
         else {
-            if ($coupon->expire <= Carbon::now()) {
+            if ($coupon->expired_date <= Carbon::now()) {
                 return redirect()->back()->with('message', 'Coupon Expired!');
-            } else {
+            }
+            if ($coupon->minimum_amount > $cart_sub_total) {
+                return redirect()->back()->with('message', 'Minimum amount for this coupon is not reached!');
+            }
+            if ($coupon->user_id != \auth('customer')->id()) {
+                return redirect()->back()->with('message', 'You are not eligible for this coupon!');
+            }
+            if ($coupon->quantity <= $coupon->used) {
+                return redirect()->back()->with('message', 'You have used all of your coupons!');
+            }
+            else {
+                switch ($coupon->type) {
+                    case 'fixed':
+                        $coupon_value = $coupon->amount;
+                        break;
+                    case 'percentage':
+                        $coupon_value = ($cart_sub_total * $coupon->amount) / 100;
+                }
                 $couponCart = [
                   'code' => $coupon->code,
-                  'value' => $coupon->value,
+                  'value' => $coupon_value,
                 ];
                 session()->put('couponCart', $couponCart);
                 return redirect(route('cart'));

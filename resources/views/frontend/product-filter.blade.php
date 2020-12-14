@@ -21,7 +21,7 @@
                     @forelse(\App\Product::limit(6)->get() as $product)
 
                         <div class="col-4 p-2">
-                            <div class="single_product h-auto">
+                            <div class="single_product">
                                 <div class="product_thumb">
                                     <a class="primary_img" href="{{ route('product-details', [$product->category->slug, $product->slug]) }}">
                                         <img src="{{ productImage($product->image) }}" alt=""></a>

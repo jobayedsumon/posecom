@@ -161,7 +161,9 @@
 
 
 <!--map js code here-->
-<script src="https://maps.google.com/maps/api/js?sensor=false&amp;libraries=geometry&amp;v=3.22&amp;key=AIzaSyChs2QWiAhnzz0a4OEhzqCXwx_qA9ST_lE"></script>
+<script defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDfIFbp2cRAO3dMWDxCPeTpxOeu5PHBEso&callback=initMap">
+</script>
 <script src="https://www.google.com/jsapi"></script>
 <script src="{{ asset('frontend') }}/js/map.js"></script>
 

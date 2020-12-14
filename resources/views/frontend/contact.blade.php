@@ -25,10 +25,13 @@
     </div>
     <!--breadcrumbs area end-->
 
+    <div id="map"></div>
+
     <!--contact map start-->
     <div class="contact_map">
        <div class="map-area">
-          <div id="googleMap"></div>
+
+
        </div>
     </div>
     <!--contact map end-->

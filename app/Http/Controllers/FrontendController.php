@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\AmarCare;
 use App\Brand;
 use App\Category;
+use App\Deal;
 use App\FeaturedProduct;
 use App\Order;
 use App\Page;
@@ -40,7 +41,6 @@ class FrontendController extends Controller
             $newProducts = Product::latest()->limit(20)->get();
         }
 
-//        $allSale = Sale::latest()->where('expire', '>', now())->get();
         $brands = Brand::all();
 
 
@@ -196,6 +196,7 @@ class FrontendController extends Controller
     public function compare()
     {
         $compare = \session()->get('compare');
+
 
         return view('frontend.compare', compact('compare'));
     }

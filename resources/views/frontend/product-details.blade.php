@@ -267,7 +267,7 @@
                                     @endforelse
 
 
-                                    @auth()
+                                    @auth('customer')
 
                                         <form method="POST" action="{{ route('rate-product') }}">
                                             @csrf
