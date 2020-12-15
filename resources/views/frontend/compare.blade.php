@@ -47,7 +47,9 @@
 
                 <div class="flex flex-column justify-between h-100">
                     <div>
+                        <a href="{{ route('product-details', [$product->category->slug, $product->slug]) }}">
                         <img src="{{ productImage($product->image) }}" class="img-thumbnail" alt="">
+                        </a>
                     </div>
                     <table class="table table-striped table-hover row">
                         <thead>

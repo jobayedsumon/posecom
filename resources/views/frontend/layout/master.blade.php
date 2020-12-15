@@ -161,9 +161,11 @@
 
 
 <!--map js code here-->
-<script defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDfIFbp2cRAO3dMWDxCPeTpxOeu5PHBEso&callback=initMap">
-</script>
+<script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIwzALxUPNbatRBj3Xi1Uhp0fFzwWNBkE&callback=initMap&libraries=&v=weekly"
+        defer
+></script>
+
 <script src="https://www.google.com/jsapi"></script>
 <script src="{{ asset('frontend') }}/js/map.js"></script>
 

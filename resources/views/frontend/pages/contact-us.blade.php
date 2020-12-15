@@ -27,9 +27,9 @@
 
     <!--contact map start-->
     <div class="contact_map">
-       <div class="map-area">
-          <div id="googleMap"></div>
-       </div>
+
+          <div id="map"></div>
+
     </div>
     <!--contact map end-->
 
@@ -73,7 +73,7 @@
                                 <label>  Your Message</label>
                                 <input placeholder="Message *" name="message" type="text"  class="form-control2 py-5" />
                             </div>
-                            <button type="submit"> Send</button>
+                            <button class="mt-4 hover:text-black" type="submit"> Send</button>
                             <p class="form-messege"></p>
                         </form>
 

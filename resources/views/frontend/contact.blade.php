@@ -25,15 +25,10 @@
     </div>
     <!--breadcrumbs area end-->
 
-    <div id="map"></div>
+
 
     <!--contact map start-->
-    <div class="contact_map">
-       <div class="map-area">
-
-
-       </div>
-    </div>
+    <div id="map"></div>
     <!--contact map end-->
 
     <!--contact area start-->
