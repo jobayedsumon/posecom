@@ -201,56 +201,7 @@
 <script src="{{ asset('frontend')}}/js/main.js"></script>
 
 
-<script>
-    // (function (window, document) {
-    //     var loader = function () {
-    //         var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
-    //         script.src = "https://seamless-epay.sslcommerz.com/embed.min.js?" + Math.random().toString(36).substring(7);
-    //         tag.parentNode.insertBefore(script, tag);
-    //     };
-    //
-    //     window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
-    // })(window, document);
-</script>
-
-<script src="https://cdn.tiny.cloud/1/z9ekoznbkdy5bnxd46wf7olir5sg5bk6mq07kjjp8ocrnggq/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-
-<script>
-    tinymce.init({
-        selector: 'textarea',
-    });
-</script>
-
-
 <script src="{{ asset('frontend')}}/js/custom.js"></script>
-
-<!-- Global site tag (gtag.js) - Google Analytics -->
-{{--<script async src="https://www.googletagmanager.com/gtag/js?id=UA-176936453-1"></script>--}}
-{{--<script>--}}
-{{--    window.dataLayer = window.dataLayer || [];--}}
-{{--    function gtag(){dataLayer.push(arguments);}--}}
-{{--    gtag('js', new Date());--}}
-
-{{--    gtag('config', 'UA-176936453-1');--}}
-{{--</script>--}}
-
-{{--<!-- Facebook Pixel Code -->--}}
-{{--<script>--}}
-{{--    !function(f,b,e,v,n,t,s)--}}
-{{--    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?--}}
-{{--        n.callMethod.apply(n,arguments):n.queue.push(arguments)};--}}
-{{--        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';--}}
-{{--        n.queue=[];t=b.createElement(e);t.async=!0;--}}
-{{--        t.src=v;s=b.getElementsByTagName(e)[0];--}}
-{{--        s.parentNode.insertBefore(t,s)}(window, document,'script',--}}
-{{--        'https://connect.facebook.net/en_US/fbevents.js');--}}
-{{--    fbq('init', '3190429781022320');--}}
-{{--    fbq('track', 'PageView');--}}
-{{--</script>--}}
-{{--<noscript><img height="1" width="1" style="display:none"--}}
-{{--               src="https://www.facebook.com/tr?id=3190429781022320&ev=PageView&noscript=1"--}}
-{{--    /></noscript>--}}
-<!-- End Facebook Pixel Code -->
 
 </body>
 

@@ -8,14 +8,14 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="19a7fae1-468e-4082-a151-7549bf015b55" name="Default Changelist" comment="Almost completed, Compare, Testimonial">
+    <list default="true" id="19a7fae1-468e-4082-a151-7549bf015b55" name="Default Changelist" comment="Map done">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/frontend/css/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/frontend/css/custom.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/frontend/js/map.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/frontend/js/map.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/frontend/compare.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/compare.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/frontend/contact.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/contact.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/frontend/brand-search.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/brand-search.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/frontend/layout/deals.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/layout/deals.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/frontend/layout/master.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/layout/master.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/frontend/pages/contact-us.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/pages/contact-us.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/frontend/search.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/search.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -175,6 +175,7 @@
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
@@ -225,7 +226,9 @@
       <workItem from="1607932639789" duration="5303000" />
       <workItem from="1607946539797" duration="18000" />
       <workItem from="1607946929314" duration="444000" />
-      <workItem from="1608011097450" duration="2404000" />
+      <workItem from="1608011097450" duration="2520000" />
+      <workItem from="1608352450564" duration="656000" />
+      <workItem from="1608965098864" duration="5767000" />
     </task>
     <task id="LOCAL-00001" summary="New tables added, Cart working, Major upgrade">
       <created>1607347589782</created>
@@ -262,7 +265,14 @@
       <option name="project" value="LOCAL" />
       <updated>1607946073142</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Map done">
+      <created>1608019208690</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1608019208690</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -317,7 +327,8 @@
     <MESSAGE value="All links fixed, modal fixed" />
     <MESSAGE value="Filter by category" />
     <MESSAGE value="Almost completed, Compare, Testimonial" />
-    <option name="LAST_COMMIT_MESSAGE" value="Almost completed, Compare, Testimonial" />
+    <MESSAGE value="Map done" />
+    <option name="LAST_COMMIT_MESSAGE" value="Map done" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

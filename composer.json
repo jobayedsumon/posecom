@@ -18,7 +18,7 @@
         "guzzlehttp/guzzle": "^6.3",
         "laravel-frontend-presets/material-dashboard": "^1.1",
         "laravel/framework": "^7.0",
-        "laravel/socialite": "^5.0",
+        "laravel/socialite": "^5.1",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
         "renatomarinho/laravel-page-speed": "^1.8",

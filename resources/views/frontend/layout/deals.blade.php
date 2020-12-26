@@ -18,12 +18,12 @@
                                     <div class="product_thumb">
                                         <a class="primary_img" href="{{ route('product-details', [$deal->product->category->slug, $deal->product->slug]) }}">
                                             <img src="{{ productImage($deal->product->image)}}" alt=""></a>
-{{--                                        <div class="label_product">--}}
-{{--                                            <span class="label_sale">-{{ $deal->percentage }}%</span>--}}
-{{--                                        </div>--}}
+                                        <div class="label_product">
+                                            <span class="label_sale">-{{ $deal->percentage }}%</span>
+                                        </div>
                                         <div class="action_links">
                                             <ul>
-                                               o<li class="wishlist"><a href="javascript:void(0)" class="wishlistButton" data-id="{{ $deal->product->id }}"
+                                               <li class="wishlist"><a href="javascript:void(0)" class="wishlistButton" data-id="{{ $deal->product->id }}"
                                                                         title="Add to Wishlist"><i class="icon-heart icons"></i></a></li>
                                                 <li class="compare">
                                                     <a href="javascript:void(0)" class="compareButton" data-id="{{ $deal->product->id }}" title="Add to Compare">

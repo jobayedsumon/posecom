@@ -12,11 +12,11 @@
 <div class="container">
     <h1 class="text-4xl my-5">{{ $brandName ? $brandName . '\'s products' : '' }}</h1>
     <hr>
-    <div class="row">
+    <div class="row my-5">
 
         @forelse($products as $product)
 
-            <div class="single_product col-md-4 h-auto">
+            <div class="single_product col-md-3 h-auto">
                 <div class="product_thumb">
                     <a class="primary_img" href="{{ route('product-details', [$product->category->slug, $product->slug]) }}">
                         <img src="{{ productImage($product->image) }}" alt=""></a>
