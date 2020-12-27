@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Customer;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
@@ -124,6 +125,8 @@ class CustomerController extends Controller
                 break;
         }
 
+        dd($user);
+
         // check if they're an existing user
         $existingCustomer = Customer::where('email', $user->email)->first();
 
@@ -135,8 +138,8 @@ class CustomerController extends Controller
             $newCustomer                  = new Customer;
             $newCustomer->name            = $user->name;
             $newCustomer->email           = $user->email;
-            $newCustomer->password        = bcrypt('amarshop');
             $newCustomer->phone_number    = '';
+            $newCustomer->customer_group_id = 2;
             $newCustomer->save();
 
             auth('customer')->login($newCustomer, true);
