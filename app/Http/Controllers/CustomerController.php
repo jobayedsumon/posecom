@@ -125,7 +125,6 @@ class CustomerController extends Controller
                 break;
         }
 
-        dd($user);
 
         // check if they're an existing user
         $existingCustomer = Customer::where('email', $user->email)->first();
@@ -138,7 +137,6 @@ class CustomerController extends Controller
             $newCustomer                  = new Customer;
             $newCustomer->name            = $user->name;
             $newCustomer->email           = $user->email;
-            $newCustomer->phone_number    = '';
             $newCustomer->customer_group_id = 2;
             $newCustomer->save();
 
