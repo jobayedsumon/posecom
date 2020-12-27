@@ -9,7 +9,7 @@
                 <div class="testimonial_container">
                     <div class="owl-carousel owl-theme testimonial_column3">
 
-                        @forelse(\App\Testimonial::all() as $testimonial)
+                        @forelse(\App\Testimonial::where('status', 1)->get() as $testimonial)
                         <div class="single_testimonial text-center w-full">
 
                                 <div class="testimonial_icon_img">
