@@ -125,8 +125,6 @@ class CustomerController extends Controller
                 break;
         }
 
-        dd($user);
-
 
         // check if they're an existing user
         $existingCustomer = Customer::where('email', $user->email)->first();
