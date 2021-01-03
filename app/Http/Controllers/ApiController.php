@@ -38,14 +38,14 @@ class ApiController extends Controller
         $this->middleware('auth:customer-api')->only([
             'wishlist', 'my_account', 'update_account', 'update_address', 'logout',
             'add_wishlist', 'remove_wishlist', 'cash_on_delivery', 'online_payment',
-            'rate_product'
+            'rate_product', 'coupon'
         ]);
     }
 
 
     public function products()
     {
-        return Product::with(['category', 'sale', 'specifications', 'colors', 'sizes', 'tags', 'comments']);
+        return Product::with(['category', 'deal', 'variant', 'comments']);
     }
     //
     public function sliders()
@@ -63,7 +63,7 @@ class ApiController extends Controller
 
     public function shops()
     {
-        $shops = Category::with('sub_categories')->get();
+        $shops = Category::all();
 
         if ($shops) {
             return response()->json($shops, 200);
@@ -118,9 +118,11 @@ class ApiController extends Controller
 
     public function featured_products()
     {
-        $featuredCatIds = FeaturedProduct::all()->pluck('category_id')->unique();
-        $featuredProdIds = FeaturedProduct::all()->pluck('product_id');
+
+        $featuredProdIds = Product::where('featured', 1)->pluck('id');
+        $featuredCatIds = Product::where('featured', 1)->pluck('category_id');
         $featuredCategories = Category::whereIn('id', $featuredCatIds)->get();
+
         $featuredProducts = $this->products()->whereIn('id', $featuredProdIds);
 
         $data = [];
@@ -128,7 +130,7 @@ class ApiController extends Controller
         foreach ($featuredCategories as $i => $fc) {
             $data[$i]['categoryName'] = $fc->name;
             $data[$i]['Products'] = $fc->products()->whereIn('id', $featuredProdIds)
-                ->with(['category', 'sale', 'specifications', 'colors', 'sizes', 'tags', 'comments'])
+                ->with(['category', 'deal', 'variant', 'comments'])
                 ->get();
         }
 
@@ -227,22 +229,20 @@ class ApiController extends Controller
 
     public function filter_product(Request $request)
     {
-        $brand = $request->brand_id;
-        $size = $request->size_id;
+        $category_id = $request->category_id;
+        $brand_id = $request->brand_id;
 
-        $minPrice = $request->min_amount;
-        $maxPrice = $request->max_amount;
+        $minPrice = (int)$request->min_amount;
+        $maxPrice = (int)$request->max_amount;
 
         $data = $this->products()->whereBetween('price', [$minPrice, $maxPrice]);
 
-        if ($brand != -1) {
-            $prodIds = Brand::find($brand)->products()->pluck('id');
-            $data->whereIn('id', $prodIds);
+        if ($category_id != -1) {
+            $data->where('category_id', $category_id);
         }
 
-        if ($size != -1) {
-            $prodIds = Size::find($size)->products()->pluck('id');
-            $data->whereIn('id', $prodIds);
+        if ($brand_id != -1) {
+            $data->where('brand_id', $brand_id);
         }
 
         $data = $data->get();
@@ -316,13 +316,11 @@ class ApiController extends Controller
     public function filter_attributes()
     {
         $brands = Brand::all();
-        $sizes = Size::all();
-        $tags = Tag::all();
+        $categories = Category::all();
 
         return response()->json([
             'brands' => $brands,
-            'sizes' => $sizes,
-            'tags' => $tags
+            'categories' => $categories,
         ], 200);
     }
 
@@ -393,16 +391,6 @@ class ApiController extends Controller
             $newCustomer = Customer::create([
                'name' => $name,
                'email' => $email,
-               'password' => bcrypt('amarshop'),
-               'phone_number' => '',
-               'birthdate' => null,
-               'remember_token' => null,
-               'shipping_address' => null,
-               'billing_address' => null,
-               'total_purchase_amount' => null,
-               'total_purchase_count' => null,
-               'receive_offer' => null,
-               'newsletter' => null,
             ]);
 
             $token = auth('customer-api')->login($newCustomer, true);
@@ -422,6 +410,7 @@ class ApiController extends Controller
 
     public function register(Request $request)
     {
+
         $validator = Validator::make($request->all(), [
             'email' => 'email|required|unique:customers',
             'password' => 'required|confirmed|min:6',
@@ -445,6 +434,7 @@ class ApiController extends Controller
             'password' => bcrypt($data['password']),
             'name' => $data['name'],
             'phone_number' => $data['phone_number'],
+            'customer_group_id' => 3
         ]);
 
         if ($customer) {
@@ -509,13 +499,13 @@ class ApiController extends Controller
 
         $customer = auth('customer-api')->user();
 
-        $billing_address = $request->street . '+';
-        $billing_address .= $request->city . '+';
-        $billing_address .= $request->district . '+';
-        $billing_address .= ucfirst($request->division);
-
         $customer->update([
-            'billing_address' => $billing_address,
+            'country' => 'bangladesh',
+            'state' => $request->state,
+            'district' => $request->district,
+            'city' => $request->city,
+            'postal_code' => $request->postal_code,
+            'address' => $request->address,
         ]);
 
         if ($customer) {
@@ -537,7 +527,7 @@ class ApiController extends Controller
             'product_id' => $request->productId
         ]);
 
-        $wishlistCount = Wishlist::all()->count();
+        $wishlistCount = $customer->wishlist()->count();
 
         if ($wishlist) {
             return response()->json([
@@ -556,7 +546,7 @@ class ApiController extends Controller
         $wishlist = Wishlist::findOrFail($wishId);
         $response = $wishlist->delete();
 
-        $wishlistCount = Wishlist::all()->count();
+        $wishlistCount = \auth('customer-api')->user()->wishlist()->count();
 
         if ($response) {
             return response()->json([
@@ -609,31 +599,28 @@ class ApiController extends Controller
 
 
 
-        if ($request->shipping_address == 'true') {
+        if ($request->shipping_address) {
             $request->validate([
-                'shipping_street' => 'required',
+                'shipping_address' => 'required',
                 'shipping_city' => 'required',
                 'shipping_district' => 'required',
-                'shipping_division' => 'required',
+                'shipping_state' => 'required',
+                'shipping_postal_code' => 'required',
             ]);
-            $shipping_address = $request->shipping_street . '+';
-            $shipping_address .= $request->shipping_city . '+';
-            $shipping_address .= $request->shipping_district . '+';
-            $shipping_address .= ucfirst($request->shipping_division);
-        } else {
-            $shipping_address = $billing_address;
         }
 
         $customer->update([
             'name' => $request->name,
             'phone_number' => $request->phone_number,
-            'billing_address' => $billing_address,
-            'shipping_address' => $shipping_address,
+            'address' => $request->address,
+            'city' => $request->city,
+            'district' => $request->district,
+            'state' => $request->state,
+            'postal_code' => $request->postal_code,
 
         ]);
 
         $notes = $request->notes;
-
 
 
         # Here you have to receive all the order data to initate the payment.
@@ -648,36 +635,38 @@ class ApiController extends Controller
         # CUSTOMER INFORMATION
         $post_data['cus_name'] =  $request->name ?? "";
         $post_data['cus_email'] =  $request->email ?? "";
-        $post_data['cus_add1'] = $request->street ?? "";
-        $post_data['cus_add2'] = $request->street ?? "";
+        $post_data['cus_add1'] = $request->address ?? "";
+        $post_data['cus_add2'] = $request->address ?? "";
         $post_data['cus_city'] =  $request->city ?? "";
-        $post_data['cus_state'] = $request->city ?? "";
-        $post_data['cus_postcode'] = $request->post ?? "";
+        $post_data['cus_state'] = $request->state ?? "";
+        $post_data['cus_postcode'] = $request->postal_code ?? "";
         $post_data['cus_country'] = "Bangladesh";
         $post_data['cus_phone'] =  $request->phone_number ?? "";;
         $post_data['cus_fax'] = "";
 
         # SHIPMENT INFORMATION
         $post_data['ship_name'] =  $request->shipping_name ?? $request->name;
-        $post_data['ship_add1'] =  $request->shipping_street ?? $request->street;
-        $post_data['ship_add2'] = $request->shipping_street ?? $request->street;
+        $post_data['ship_add1'] =  $request->shipping_address ?? $request->address;
+        $post_data['ship_add2'] = $request->shipping_address ?? $request->address;
         $post_data['ship_city'] = $request->shipping_city ?? $request->city;
-        $post_data['ship_state'] = $request->shipping_city ?? $request->city;
-        $post_data['ship_postcode'] = $request->shipping_post ?? $request->post;
+        $post_data['ship_district'] = $request->shipping_district ?? $request->district;
+        $post_data['ship_state'] = $request->shipping_state ?? $request->state;
+        $post_data['ship_postcode'] = $request->shipping_postal_code ?? $request->postal_code;
         $post_data['ship_phone'] = $request->shipping_phone_number ?? $request->phone_number;
-        $post_data['ship_email'] = $request->shipping_email?? $request->email;
+        $post_data['ship_email'] = $request->shipping_email ?? $request->email;
         $post_data['ship_country'] = "Bangladesh";
 
         $post_data['shipping_method'] = "NO";
-        $post_data['product_name'] = "AmarShop";
-        $post_data['product_category'] = "AmarShop";
-        $post_data['product_profile'] = "AmarShop";
+        $post_data['product_name'] = "Mridha Enterprise";
+        $post_data['product_category'] = "Mridha Enterprise";
+        $post_data['product_profile'] = "Mridha Enterprise";
 
         # OPTIONAL PARAMETERS
         $post_data['value_a'] = "ref001";
         $post_data['value_b'] = "ref002";
         $post_data['value_c'] = "ref003";
         $post_data['value_d'] = "ref004";
+
 
         #Before  going to initiate the payment order status need to insert or update as Pending.
         $update_product = DB::table('orders')
@@ -688,31 +677,74 @@ class ApiController extends Controller
                 'phone' => $post_data['ship_phone'],
                 'amount' => $post_data['total_amount'],
                 'status' => 'Pending',
-                'address' => $shipping_address,
+                'address' => $post_data['ship_add1'],
+                'city' => $post_data['ship_city'],
+                'district' => $post_data['ship_district'],
+                'state' => $post_data['ship_state'],
+                'postal_code' => $post_data['ship_postcode'],
+                'country' => 'Bangladesh',
                 'transaction_id' => $post_data['tran_id'],
                 'currency' => $post_data['currency'],
                 'customer_id' => $customer->id,
+                'origin' => 'Website',
                 'notes' => $notes,
                 'created_at' => now(),
             ]);
 
         $order = Order::where('transaction_id', $post_data['tran_id'])->first();
 
+        $warehouse = DB::table('warehouses')->where('name', '=', 'Shop')->first();
+
 
         for ($i = 0; $i < $count; $i++) {
             OrderDetails::create([
                 'order_id' => $order->id,
-                'product_id' => $cart[$i]->product_id,
-                'count' => $cart[$i]->count,
-                'color_id' => $cart[$i]->color_id,
-                'size_id' => $cart[$i]->size_id,
+                'product_id' => $cart[$i]['product_id'],
+                'count' => $cart[$i]['count'],
+                'color_id' => $cart[$i]['color_id'],
+                'size_id' => $cart[$i]['size_id'],
             ]);
 
-            $product = Product::find($cart[$i]->product_id);
+            $product = Product::find($cart[$i]['product_id']);
 
-            $product->quantity -= $cart[$i]->count;
+            $warehouse_data = DB::table('product_warehouse')->where([
+                ['product_id', $product->id],
+                ['warehouse_id', $warehouse->id ],
+            ]);
 
-            $product->save();
+
+            $product_quantity = $product->qty - $cart[$i]['count'];
+            $warehouse_count = $warehouse_data->first()->qty - $cart[$i]['count'];
+
+            $warehouse_data->update([
+                'qty' => $warehouse_count
+            ]);
+
+            $product->update([
+                'qty' => $product_quantity
+            ]);
+
+
+
+            $product_variant_data = DB::table('product_variants')->select('id', 'variant_id', 'qty')
+                ->where('product_id', $product->id)->where('id', $cart[$i]['size_id']);
+
+            //deduct product variant quantity if exist
+            if($product_variant_data->first()) {
+                $variant_count = $product_variant_data->first()->qty - $cart[$i]['count'];
+                $product_variant_data->update([
+                    'qty' => $variant_count
+                ]);
+            }
+
+        }
+
+        $couponCart = $request->couponCart;
+
+        if ($couponCart) {
+            $coupon = Coupon::where('code', $couponCart['code'])->first();
+            $coupon->used += 1;
+            $coupon->save();
         }
 
         switch ($request->payment_method)
@@ -750,6 +782,8 @@ class ApiController extends Controller
 
         $total = $request->total;
 
+
+
         if (!$cart) {
             return response()->json([
                 'msg' => 'Please add products and choose shipping location'
@@ -762,7 +796,7 @@ class ApiController extends Controller
             ], 404);
         }
 
-        if ($request->payment_method != 'ssl') {
+        if ($request->payment_method != 'cod') {
             return response()->json([
                 'msg' => 'An error occurred while processing your order!'
             ], 404);
@@ -775,31 +809,28 @@ class ApiController extends Controller
 
 
 
-        if ($request->shipping_address == 'true') {
+        if ($request->shipping_address) {
             $request->validate([
-                'shipping_street' => 'required',
+                'shipping_address' => 'required',
                 'shipping_city' => 'required',
                 'shipping_district' => 'required',
-                'shipping_division' => 'required',
+                'shipping_state' => 'required',
+                'shipping_postal_code' => 'required',
             ]);
-            $shipping_address = $request->shipping_street . '+';
-            $shipping_address .= $request->shipping_city . '+';
-            $shipping_address .= $request->shipping_district . '+';
-            $shipping_address .= ucfirst($request->shipping_division);
-        } else {
-            $shipping_address = $billing_address;
         }
 
         $customer->update([
             'name' => $request->name,
             'phone_number' => $request->phone_number,
-            'billing_address' => $billing_address,
-            'shipping_address' => $shipping_address,
+            'address' => $request->address,
+            'city' => $request->city,
+            'district' => $request->district,
+            'state' => $request->state,
+            'postal_code' => $request->postal_code,
 
         ]);
 
         $notes = $request->notes;
-
 
 
         # Here you have to receive all the order data to initate the payment.
@@ -807,43 +838,45 @@ class ApiController extends Controller
         # In "orders" table, order unique identity is "transaction_id". "status" field contain status of the transaction, "amount" is the order amount to be paid and "currency" is for storing Site Currency which will be checked with paid currency.
 
         $post_data = array();
-        $post_data['total_amount'] = $request->total; # You cant not pay less than 10
+        $post_data['total_amount'] = $total; # You cant not pay less than 10
         $post_data['currency'] = "BDT";
         $post_data['tran_id'] = uniqid(); // tran_id must be unique
 
         # CUSTOMER INFORMATION
         $post_data['cus_name'] =  $request->name ?? "";
         $post_data['cus_email'] =  $request->email ?? "";
-        $post_data['cus_add1'] = $request->street ?? "";
-        $post_data['cus_add2'] = $request->street ?? "";
+        $post_data['cus_add1'] = $request->address ?? "";
+        $post_data['cus_add2'] = $request->address ?? "";
         $post_data['cus_city'] =  $request->city ?? "";
-        $post_data['cus_state'] = $request->city ?? "";
-        $post_data['cus_postcode'] = $request->post ?? "";
+        $post_data['cus_state'] = $request->state ?? "";
+        $post_data['cus_postcode'] = $request->postal_code ?? "";
         $post_data['cus_country'] = "Bangladesh";
         $post_data['cus_phone'] =  $request->phone_number ?? "";;
         $post_data['cus_fax'] = "";
 
         # SHIPMENT INFORMATION
-        $post_data['ship_name'] =  $request->shipping_name ?? $post_data['cus_name'];
-        $post_data['ship_add1'] =  $request->shipping_street ?? $post_data['cus_add1'];
-        $post_data['ship_add2'] = $request->shipping_street ?? $post_data['cus_add1'];
-        $post_data['ship_city'] = $request->shipping_city ?? $post_data['cus_add2'];
-        $post_data['ship_state'] = $request->shipping_city ?? $post_data['cus_city'];
-        $post_data['ship_postcode'] = $request->shipping_post ?? $post_data['cus_postcode'];
-        $post_data['ship_phone'] = $request->shipping_phone_number ?? $post_data['cus_phone'];
-        $post_data['ship_email'] = $request->shipping_email?? $post_data['cus_email'];
+        $post_data['ship_name'] =  $request->shipping_name ?? $request->name;
+        $post_data['ship_add1'] =  $request->shipping_address ?? $request->address;
+        $post_data['ship_add2'] = $request->shipping_address ?? $request->address;
+        $post_data['ship_city'] = $request->shipping_city ?? $request->city;
+        $post_data['ship_district'] = $request->shipping_district ?? $request->district;
+        $post_data['ship_state'] = $request->shipping_state ?? $request->state;
+        $post_data['ship_postcode'] = $request->shipping_postal_code ?? $request->postal_code;
+        $post_data['ship_phone'] = $request->shipping_phone_number ?? $request->phone_number;
+        $post_data['ship_email'] = $request->shipping_email ?? $request->email;
         $post_data['ship_country'] = "Bangladesh";
 
         $post_data['shipping_method'] = "NO";
-        $post_data['product_name'] = "AmarShop";
-        $post_data['product_category'] = "AmarShop";
-        $post_data['product_profile'] = "AmarShop";
+        $post_data['product_name'] = "Mridha Enterprise";
+        $post_data['product_category'] = "Mridha Enterprise";
+        $post_data['product_profile'] = "Mridha Enterprise";
 
         # OPTIONAL PARAMETERS
         $post_data['value_a'] = "ref001";
         $post_data['value_b'] = "ref002";
         $post_data['value_c'] = "ref003";
         $post_data['value_d'] = "ref004";
+
 
         #Before  going to initiate the payment order status need to insert or update as Pending.
         $update_product = DB::table('orders')
@@ -854,31 +887,74 @@ class ApiController extends Controller
                 'phone' => $post_data['ship_phone'],
                 'amount' => $post_data['total_amount'],
                 'status' => 'Pending',
-                'address' => $shipping_address,
+                'address' => $post_data['ship_add1'],
+                'city' => $post_data['ship_city'],
+                'district' => $post_data['ship_district'],
+                'state' => $post_data['ship_state'],
+                'postal_code' => $post_data['ship_postcode'],
+                'country' => 'Bangladesh',
                 'transaction_id' => $post_data['tran_id'],
                 'currency' => $post_data['currency'],
                 'customer_id' => $customer->id,
+                'origin' => 'Website',
                 'notes' => $notes,
                 'created_at' => now(),
             ]);
 
         $order = Order::where('transaction_id', $post_data['tran_id'])->first();
 
+        $warehouse = DB::table('warehouses')->where('name', '=', 'Shop')->first();
+
 
         for ($i = 0; $i < $count; $i++) {
             OrderDetails::create([
                 'order_id' => $order->id,
-                'product_id' => $cart[$i]->product_id,
-                'count' => $cart[$i]->count,
-                'color_id' => $cart[$i]->color_id,
-                'size_id' => $cart[$i]->size_id,
+                'product_id' => $cart[$i]['product_id'],
+                'count' => $cart[$i]['count'],
+                'color_id' => $cart[$i]['color_id'],
+                'size_id' => $cart[$i]['size_id'],
             ]);
 
-            $product = Product::find($cart[$i]->product_id);
+            $product = Product::find($cart[$i]['product_id']);
 
-            $product->quantity -= $cart[$i]->count;
+            $warehouse_data = DB::table('product_warehouse')->where([
+                ['product_id', $product->id],
+                ['warehouse_id', $warehouse->id ],
+            ]);
 
-            $product->save();
+
+            $product_quantity = $product->qty - $cart[$i]['count'];
+            $warehouse_count = $warehouse_data->first()->qty - $cart[$i]['count'];
+
+            $warehouse_data->update([
+                'qty' => $warehouse_count
+            ]);
+
+            $product->update([
+                'qty' => $product_quantity
+            ]);
+
+
+
+            $product_variant_data = DB::table('product_variants')->select('id', 'variant_id', 'qty')
+                ->where('product_id', $product->id)->where('id', $cart[$i]['size_id']);
+
+            //deduct product variant quantity if exist
+            if($product_variant_data->first()) {
+                $variant_count = $product_variant_data->first()->qty - $cart[$i]['count'];
+                $product_variant_data->update([
+                    'qty' => $variant_count
+                ]);
+            }
+
+        }
+
+        $couponCart = $request->couponCart;
+
+        if ($couponCart) {
+            $coupon = Coupon::where('code', $couponCart['code'])->first();
+            $coupon->used += 1;
+            $coupon->save();
         }
 
 
@@ -948,6 +1024,7 @@ class ApiController extends Controller
     public function coupon(Request $request)
     {
         $coupon = Coupon::where('code', $request->coupon)->first();
+        $cart_sub_total = $request->cart_sub_total;
 
         if (!$coupon) {
             return response()->json([
@@ -955,22 +1032,45 @@ class ApiController extends Controller
             ], 404);
         }
         else {
-            if ($coupon->expire <= Carbon::now()) {
+            if ($coupon->expired_date <= Carbon::now()) {
                 return response()->json([
                     'msg' => 'Coupon Expired!',
                 ], 404);
-            } else {
+            }
+            if ($coupon->minimum_amount > $cart_sub_total) {
+                return response()->json([
+                    'msg' => 'Minimum amount for this coupon is not reached!',
+                ], 404);
+            }
+            if ($coupon->user_id != \auth('customer-api')->id()) {
+                return response()->json([
+                    'msg' => 'You are not eligible for this coupon!',
+                ], 404);
+            }
+            if ($coupon->quantity <= $coupon->used) {
+                return response()->json([
+                    'msg' => 'You have used all of your coupons!',
+                ], 404);
+            }
+            else {
+                switch ($coupon->type) {
+                    case 'fixed':
+                        $coupon_value = $coupon->amount;
+                        break;
+                    case 'percentage':
+                        $coupon_value = ($cart_sub_total * $coupon->amount) / 100;
+                }
                 $validCoupon = [
                     'code' => $coupon->code,
-                    'value' => $coupon->value,
+                    'value' => $coupon_value,
                 ];
 
                 return response()->json([
                     'validCoupon' => $validCoupon,
                 ], 200);
-
             }
         }
+
     }
 
 }

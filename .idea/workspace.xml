@@ -8,14 +8,11 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="19a7fae1-468e-4082-a151-7549bf015b55" name="Default Changelist" comment="Map done">
+    <list default="true" id="19a7fae1-468e-4082-a151-7549bf015b55" name="Default Changelist" comment="Copyright down">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/frontend/brand-search.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/brand-search.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/frontend/layout/deals.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/layout/deals.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/frontend/layout/master.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/layout/master.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/frontend/search.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/search.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/AjaxController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/AjaxController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ApiController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ApiController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Product.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Product.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -228,7 +225,10 @@
       <workItem from="1607946929314" duration="444000" />
       <workItem from="1608011097450" duration="2520000" />
       <workItem from="1608352450564" duration="656000" />
-      <workItem from="1608965098864" duration="5767000" />
+      <workItem from="1608965098864" duration="6418000" />
+      <workItem from="1609048205307" duration="5332000" />
+      <workItem from="1609308433209" duration="5818000" />
+      <workItem from="1609328618168" duration="37000" />
     </task>
     <task id="LOCAL-00001" summary="New tables added, Cart working, Major upgrade">
       <created>1607347589782</created>
@@ -272,7 +272,49 @@
       <option name="project" value="LOCAL" />
       <updated>1608019208690</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Social login">
+      <created>1609055948691</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1609055948691</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Social login">
+      <created>1609056422486</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1609056422486</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Social login">
+      <created>1609057098900</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1609057098900</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Social login">
+      <created>1609058459652</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1609058459652</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Social login">
+      <created>1609058666460</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1609058666461</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Copyright down">
+      <created>1609070021920</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1609070021920</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -328,7 +370,9 @@
     <MESSAGE value="Filter by category" />
     <MESSAGE value="Almost completed, Compare, Testimonial" />
     <MESSAGE value="Map done" />
-    <option name="LAST_COMMIT_MESSAGE" value="Map done" />
+    <MESSAGE value="Social login" />
+    <MESSAGE value="Copyright down" />
+    <option name="LAST_COMMIT_MESSAGE" value="Copyright down" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -264,7 +264,6 @@ class AjaxController extends Controller
     {
         $category_id = $request->category_id;
         $brand_id = $request->brand_id;
-//        $size = $request->size_id;
 
         $minPrice = (int)$request->min_amount;
         $maxPrice = (int)$request->max_amount;
