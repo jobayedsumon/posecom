@@ -45,7 +45,7 @@ class ApiController extends Controller
 
     public function products()
     {
-        return Product::with(['category', 'deal', 'variant', 'comments']);
+        return Product::with(['category', 'deal', 'variant', 'comments', 'brand']);
     }
     //
     public function sliders()

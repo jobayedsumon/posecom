@@ -8,11 +8,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="19a7fae1-468e-4082-a151-7549bf015b55" name="Default Changelist" comment="Copyright down">
+    <list default="true" id="19a7fae1-468e-4082-a151-7549bf015b55" name="Default Changelist" comment="API Completed">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/AjaxController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/AjaxController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ApiController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ApiController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Product.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Product.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -229,6 +227,8 @@
       <workItem from="1609048205307" duration="5332000" />
       <workItem from="1609308433209" duration="5818000" />
       <workItem from="1609328618168" duration="37000" />
+      <workItem from="1609664187914" duration="1013000" />
+      <workItem from="1609739758452" duration="54000" />
     </task>
     <task id="LOCAL-00001" summary="New tables added, Cart working, Major upgrade">
       <created>1607347589782</created>
@@ -314,7 +314,14 @@
       <option name="project" value="LOCAL" />
       <updated>1609070021920</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="API Completed">
+      <created>1609664219816</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1609664219817</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -372,7 +379,8 @@
     <MESSAGE value="Map done" />
     <MESSAGE value="Social login" />
     <MESSAGE value="Copyright down" />
-    <option name="LAST_COMMIT_MESSAGE" value="Copyright down" />
+    <MESSAGE value="API Completed" />
+    <option name="LAST_COMMIT_MESSAGE" value="API Completed" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
