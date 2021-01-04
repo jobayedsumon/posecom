@@ -130,7 +130,7 @@ class ApiController extends Controller
         foreach ($featuredCategories as $i => $fc) {
             $data[$i]['categoryName'] = $fc->name;
             $data[$i]['Products'] = $fc->products()->whereIn('id', $featuredProdIds)
-                ->with(['category', 'deal', 'variant', 'comments'])
+                ->with(['category', 'deal', 'variant', 'comments', 'brand'])
                 ->get();
         }
 
