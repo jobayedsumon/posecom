@@ -41,7 +41,7 @@
                 <div class="collapse navbar-collapse" id="main_nav99">
                     <ul class="navbar-nav flex flex-row items-center justify-evenly w-full">
                         <li class="nav-item">
-                            <a href="{{ route('home') }}"><img width="300px" src="{{ logo($general_setting->site_logo) }}" alt=""></a>
+                            <a href="{{ route('home') }}"><img width="100px" src="{{ logo($general_setting->site_logo) }}" alt=""></a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"> Shop </a>

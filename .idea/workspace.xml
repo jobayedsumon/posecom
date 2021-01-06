@@ -9,7 +9,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="19a7fae1-468e-4082-a151-7549bf015b55" name="Default Changelist" comment="API Completed">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/AjaxController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/AjaxController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ApiController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ApiController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/frontend/layout/desktop_header.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/layout/desktop_header.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/frontend/layout/footer.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/layout/footer.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -227,7 +231,10 @@
       <workItem from="1609308433209" duration="5818000" />
       <workItem from="1609328618168" duration="37000" />
       <workItem from="1609664187914" duration="1013000" />
-      <workItem from="1609739758452" duration="202000" />
+      <workItem from="1609739758452" duration="1203000" />
+      <workItem from="1609844234860" duration="545000" />
+      <workItem from="1609847945627" duration="511000" />
+      <workItem from="1609914812837" duration="666000" />
     </task>
     <task id="LOCAL-00001" summary="New tables added, Cart working, Major upgrade">
       <created>1607347589782</created>
@@ -327,7 +334,14 @@
       <option name="project" value="LOCAL" />
       <updated>1609739833987</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="API Completed">
+      <created>1609740014048</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1609740014048</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -262,7 +262,7 @@ class ApiController extends Controller
 
     public function sale_products()
     {
-        $saleProdIds = Sale::latest()->where('expire', '>', now())->pluck('product_id');
+        $saleProdIds = Deal::latest()->where('expire', '>', now())->where('percentage', '!=', 'NULL')->pluck('product_id');
 
         $saleProducts = $this->products()->whereIn('id', $saleProdIds)->get();
 
@@ -280,7 +280,7 @@ class ApiController extends Controller
 
     public function deal_products()
     {
-        $dealProdIds = Deal::latest()->where('expire', '>', now())->pluck('product_id');
+        $dealProdIds = Deal::latest()->where('expire', '>', now())->where('price', '!=', 'NULL')->pluck('product_id');
 
         $dealProducts = $this->products()->whereIn('id', $dealProdIds)->get();
 

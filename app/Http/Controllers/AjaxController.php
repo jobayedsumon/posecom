@@ -360,6 +360,7 @@ class AjaxController extends Controller
         $comment = $request->comment;
         $customer = \auth('customer')->user();
 
+
         $customer->comment($product, $comment, $star);
 
         return redirect()->back();
