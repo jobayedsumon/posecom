@@ -236,9 +236,9 @@
                             class="text-golden" href="/returns-exchange">Return & Exchange Policy</a>
                         <div class="payment_method">
 
-                                <div class="order_button m-2">
-                                    <button class="hover:text-black" id="payNowBtn" name="payment_method" value="ssl" type="submit">Pay Now</button>
-                                </div>
+{{--                                <div class="order_button m-2">--}}
+{{--                                    <button class="hover:text-black" id="payNowBtn" name="payment_method" value="ssl" type="submit">Pay Now</button>--}}
+{{--                                </div>--}}
 
                                 <div class="order_button m-2">
                                     <button class="hover:text-black" id="codBtn" name="payment_method" value="cod" type="submit">Cash on Delivery</button>

@@ -5,7 +5,7 @@
     <div class="container">
         <div class="row items-center mb-2">
             <div class="col-lg-6 col-md-6 col-sm-6">
-                <img width="100px" src="{{ logo($general_setting->site_logo) }}" class="img-fluid" alt="">
+                <img width="200px" src="{{ logo($general_setting->site_logo) }}" class="img-fluid" alt="">
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="widgets_container widget_newsletter">
